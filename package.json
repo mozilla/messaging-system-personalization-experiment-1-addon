@@ -12,7 +12,7 @@
     "prettier": "prettier '**/*.{css,js,json,jsm,md}' --trailing-comma=all --ignore-path=.eslintignore --write"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
+    "eslint": "^4.18.2",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-mozilla": "^0.4.4",
     "eslint-plugin-no-unsanitized": "^2.0.1",
