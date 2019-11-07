@@ -1,7 +1,7 @@
 {
-  "name": "normandy-nextgen-study-example",
-  "version": "0.3",
-  "description": "Demonstrates how to make a 2019-style Normandy add-on study",
+  "name": "messaging-system-personalization-study-addon",
+  "version": "0.0.0",
+  "description": "messaging-system-personalization-study-addon",
   "private": true,
   "license": "MPLv2",
   "scripts": {
