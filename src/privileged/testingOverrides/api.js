@@ -1,5 +1,3 @@
-/* eslint-env commonjs */
-/* eslint no-unused-vars: off */
 /* eslint no-console: ["warn", { allow: ["info", "warn", "error"] }] */
 /* global ExtensionAPI */
 
@@ -7,17 +5,10 @@
 
 this.testingOverrides = class extends ExtensionAPI {
   getAPI(context) {
-    const { Services } = ChromeUtils.import(
-      "resource://gre/modules/Services.jsm",
+    const { Preferences } = ChromeUtils.import(
+      "resource://gre/modules/Preferences.jsm",
       {},
     );
-
-    const { ExtensionCommon } = ChromeUtils.import(
-      "resource://gre/modules/ExtensionCommon.jsm",
-      {},
-    );
-
-    const { EventManager, EventEmitter } = ExtensionCommon;
 
     const { ExtensionUtils } = ChromeUtils.import(
       "resource://gre/modules/ExtensionUtils.jsm",
@@ -25,15 +16,25 @@ this.testingOverrides = class extends ExtensionAPI {
     );
     const { ExtensionError } = ExtensionUtils;
 
-    const apiEventEmitter = new EventEmitter();
+    const { extension } = this;
+
+    // Copied here from tree
+    function makeWidgetId(id) {
+      id = id.toLowerCase();
+      return id.replace(/[^a-z0-9_-]/g, "_");
+    }
+
+    const widgetId = makeWidgetId(extension.manifest.applications.gecko.id);
+
     return {
       privileged: {
         testingOverrides: {
-          /* @TODO no description given */
           getBlackboxPlaceholderBehavior: async function getBlackboxPlaceholderBehavior() {
             try {
-              console.log("Called getBlackboxPlaceholderBehavior()");
-              return undefined;
+              return Preferences.get(
+                `extensions.${widgetId}.test.surveyDaysFromExpiration`,
+                false,
+              );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);

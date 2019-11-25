@@ -1,9 +1,5 @@
-/* eslint-env commonjs */
-/* eslint no-unused-vars: off */
 /* eslint no-console: ["warn", { allow: ["info", "warn", "error"] }] */
 /* global ExtensionAPI */
-
-"use strict";
 
 this.personalizedCfrPrefs = class extends ExtensionAPI {
   getAPI(context) {
@@ -11,29 +7,22 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
       "resource://gre/modules/Services.jsm",
       {},
     );
-
-    const { ExtensionCommon } = ChromeUtils.import(
-      "resource://gre/modules/ExtensionCommon.jsm",
-      {},
-    );
-
-    const { EventManager, EventEmitter } = ExtensionCommon;
-
     const { ExtensionUtils } = ChromeUtils.import(
       "resource://gre/modules/ExtensionUtils.jsm",
       {},
     );
     const { ExtensionError } = ExtensionUtils;
-
-    const apiEventEmitter = new EventEmitter();
+    const prefNameBase = "browser.messaging-system.personalized-cfr";
     return {
       privileged: {
         personalizedCfrPrefs: {
           /* Get the `score-threshold` preference's value */
           getScoreThreshold: async function getScoreThreshold() {
             try {
-              console.log("Called getScoreThreshold()");
-              return undefined;
+              const value = Services.prefs.getStringPref(
+                `${prefNameBase}.score-threshold`,
+              );
+              return parseFloat(value);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -44,8 +33,11 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Set the `score-threshold` preference's value */
           setScoreThreshold: async function setScoreThreshold(value) {
             try {
-              console.log("Called setScoreThreshold(value)", value);
-              return undefined;
+              const stringifiedValue = JSON.stringify(value);
+              return Services.prefs.setStringPref(
+                `${prefNameBase}.score-threshold`,
+                stringifiedValue,
+              );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -56,8 +48,9 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Clear the `score-threshold` preference's non-default value */
           clearScoreThreshold: async function clearScoreThreshold() {
             try {
-              console.log("Called clearScoreThreshold()");
-              return undefined;
+              return Services.prefs.clearUserPref(
+                `${prefNameBase}.score-threshold`,
+              );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -68,8 +61,10 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Get the `scores` preference's value */
           getScores: async function getScores() {
             try {
-              console.log("Called getScores()");
-              return undefined;
+              const value = Services.prefs.getStringPref(
+                `${prefNameBase}.scores`,
+              );
+              return JSON.parse(value);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -80,8 +75,11 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Set the `scores` preference's value */
           setScores: async function setScores(value) {
             try {
-              console.log("Called setScores(value)", value);
-              return undefined;
+              const stringifiedValue = JSON.stringify(value);
+              return Services.prefs.setStringPref(
+                `${prefNameBase}.scores`,
+                stringifiedValue,
+              );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -92,8 +90,7 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Clear the `scores` preference's non-default value */
           clearScores: async function clearScores() {
             try {
-              console.log("Called clearScores()");
-              return undefined;
+              return Services.prefs.clearUserPref(`${prefNameBase}.scores`);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -104,8 +101,7 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Get the `model-version` preference's value */
           getModelVersion: async function getModelVersion() {
             try {
-              console.log("Called getModelVersion()");
-              return undefined;
+              return Services.prefs.getIntPref(`${prefNameBase}.model-version`);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -116,8 +112,10 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Set the `model-version` preference's value */
           setModelVersion: async function setModelVersion(value) {
             try {
-              console.log("Called setModelVersion(value)", value);
-              return undefined;
+              return Services.prefs.setIntPref(
+                `${prefNameBase}.model-version`,
+                value,
+              );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -128,8 +126,9 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Clear the `model-version` preference's non-default value */
           clearModelVersion: async function clearModelVersion() {
             try {
-              console.log("Called clearModelVersion()");
-              return undefined;
+              return Services.prefs.clearUserPref(
+                `${prefNameBase}.model-version`,
+              );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);

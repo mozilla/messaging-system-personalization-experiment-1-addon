@@ -9,6 +9,8 @@
     "url": "git://github.com/mozilla/messaging-system-personalization-experiment-1-addon.git"
   },
   "scripts": {
+    "start:control": "npm run build && web-ext run -s dist/extension-control-$npm_package_version",
+    "start:treatment": "npm run build && web-ext run -s dist/extension-treatment-$npm_package_version",
     "build": "node build.js",
     "clean": "rimraf dist web-ext-artifacts",
     "lint": "eslint . --ext jsm,js,json",

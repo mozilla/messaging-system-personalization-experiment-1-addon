@@ -143,7 +143,7 @@ async function main() {
   await fsp.mkdir(DEST_BASE_DIR);
 
   for (const versionSuffix of ["", "pre"]) {
-    for (const variant of ["a", "b", "c"]) {
+    for (const variant of ["control", "treatment"]) {
       await buildVariant({ variant, versionSuffix });
     }
   }
