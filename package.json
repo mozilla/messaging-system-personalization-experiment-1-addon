@@ -14,16 +14,31 @@
     "lint": "eslint . --ext jsm,js,json",
     "format": "npm-run-all -s -n format:prettier format:eslint",
     "format:eslint": "eslint . --ext jsm,js,json --fix",
-    "format:prettier": "prettier '**/*.{css,js,json,jsm,md}' --trailing-comma=all --ignore-path=.eslintignore --write"
+    "format:prettier": "prettier '**/*.{css,js,json,jsm,md}' --trailing-comma=all --ignore-path=.eslintignore --write",
+    "generate": "npm-run-all -s -n generate:generateSchema:* generate:verifyWeeSchema:* generate:documentSchema:* generate:generateStubApi:* format",
+    "generate:generateSchema:messagingSystem": "cd src/privileged/messagingSystem && yaml2json schema.yaml -p > schema.json",
+    "generate:generateSchema:personalizedCfrPrefs": "cd src/privileged/personalizedCfrPrefs && yaml2json schema.yaml -p > schema.json",
+    "generate:generateSchema:testingOverrides": "cd src/privileged/testingOverrides && yaml2json schema.yaml -p > schema.json",
+    "generate:documentSchema:messagingSystem": "cd src/privileged/messagingSystem && documentSchema schema.json > api.md",
+    "generate:documentSchema:personalizedCfrPrefs": "cd src/privileged/personalizedCfrPrefs && documentSchema schema.json > api.md",
+    "generate:documentSchema:testingOverrides": "cd src/privileged/testingOverrides && documentSchema schema.json > api.md",
+    "generate:generateStubApi:messagingSystem": "cd src/privileged/messagingSystem && generateStubApi ./schema.json > stubApi.js",
+    "generate:generateStubApi:personalizedCfrPrefs": "cd src/privileged/personalizedCfrPrefs && generateStubApi ./schema.json > stubApi.js",
+    "generate:generateStubApi:testingOverrides": "cd src/privileged/testingOverrides && generateStubApi ./schema.json > stubApi.js",
+    "generate:verifyWeeSchema:messagingSystem": "cd src/privileged/messagingSystem && verifyWeeSchema schema.json",
+    "generate:verifyWeeSchema:personalizedCfrPrefs": "cd src/privileged/personalizedCfrPrefs && verifyWeeSchema schema.json",
+    "generate:verifyWeeSchema:testingOverrides": "cd src/privileged/testingOverrides && verifyWeeSchema schema.json"
   },
   "devDependencies": {
     "eslint": "^4.19.1",
     "eslint-plugin-json": "^1.2.0",
     "eslint-plugin-mozilla": "^0.4.4",
     "eslint-plugin-no-unsanitized": "^2.0.1",
-    "prettier": "^1.10.2",
     "npm-run-all": "^4.1.3",
-    "web-ext": "^2.6.0"
+    "prettier": "^1.10.2",
+    "web-ext": "^2.6.0",
+    "webext-experiment-utils": "mozilla/webext-experiment-utils#0.2.0",
+    "yamljs": "^0.3.0"
   },
   "dependencies": {
     "klaw": "^3.0.0",

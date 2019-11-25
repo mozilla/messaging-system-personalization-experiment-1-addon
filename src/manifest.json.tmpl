@@ -11,11 +11,38 @@
     }
   },
 
+  "experiment_apis": {
+    "messagingSystem": {
+      "schema": "./privileged/messagingSystem/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./privileged/messagingSystem/api.js",
+        "paths": [["privileged", "messagingSystem"]]
+      }
+    },
+    "personalizedCfrPrefs": {
+      "schema": "./privileged/personalizedCfrPrefs/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./privileged/personalizedCfrPrefs/api.js",
+        "paths": [["privileged", "personalizedCfrPrefs"]]
+      }
+    },
+    "testingOverrides": {
+      "schema": "./privileged/testingOverrides/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./privileged/testingOverrides/api.js",
+        "paths": [["privileged", "testingOverrides"]]
+      }
+    }
+  },
+
   "browser_action": {},
 
   "background": {
     "scripts": ["background.js"]
   },
 
-  "permissions": ["normandyAddonStudy"]
+  "permissions": ["normandyAddonStudy", "storage"]
 }
