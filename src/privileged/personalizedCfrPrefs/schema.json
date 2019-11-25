@@ -1,0 +1,90 @@
+[
+  {
+    "namespace": "privileged.personalizedCfrPrefs",
+    "description": "Read and write specific preferences under the `browser.messaging-system.personalized-cfr.*` namespace",
+    "functions": [
+      {
+        "name": "getScoreThreshold",
+        "type": "function",
+        "async": true,
+        "description": "Get the `score-threshold` preference's value",
+        "parameters": []
+      },
+      {
+        "name": "setScoreThreshold",
+        "type": "function",
+        "async": true,
+        "description": "Set the `score-threshold` preference's value",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "number",
+            "description": "The new value"
+          }
+        ]
+      },
+      {
+        "name": "clearScoreThreshold",
+        "type": "function",
+        "async": true,
+        "description": "Clear the `score-threshold` preference's non-default value",
+        "parameters": []
+      },
+      {
+        "name": "getScores",
+        "type": "function",
+        "async": true,
+        "description": "Get the `scores` preference's value",
+        "parameters": []
+      },
+      {
+        "name": "setScores",
+        "type": "function",
+        "async": true,
+        "description": "Set the `scores` preference's value",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "object",
+            "description": "The new value",
+            "additionalProperties": true
+          }
+        ]
+      },
+      {
+        "name": "clearScores",
+        "type": "function",
+        "async": true,
+        "description": "Clear the `scores` preference's non-default value",
+        "parameters": []
+      },
+      {
+        "name": "getModelVersion",
+        "type": "function",
+        "async": true,
+        "description": "Get the `model-version` preference's value",
+        "parameters": []
+      },
+      {
+        "name": "setModelVersion",
+        "type": "function",
+        "async": true,
+        "description": "Set the `model-version` preference's value",
+        "parameters": [
+          {
+            "name": "value",
+            "type": "number",
+            "description": "The new value"
+          }
+        ]
+      },
+      {
+        "name": "clearModelVersion",
+        "type": "function",
+        "async": true,
+        "description": "Clear the `model-version` preference's non-default value",
+        "parameters": []
+      }
+    ]
+  }
+]
