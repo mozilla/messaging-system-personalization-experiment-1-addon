@@ -1,9 +1,13 @@
 {
-  "name": "messaging-system-personalization-study-addon",
+  "name": "messaging-system-personalization-experiment-1-addon",
   "version": "0.0.0",
-  "description": "messaging-system-personalization-study-addon",
+  "description": "messaging-system-personalization-experiment-1-addon",
   "private": true,
   "license": "MPLv2",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mozilla/messaging-system-personalization-experiment-1-addon.git"
+  },
   "scripts": {
     "build": "node build.js",
     "clean": "rimraf dist web-ext-artifacts",
