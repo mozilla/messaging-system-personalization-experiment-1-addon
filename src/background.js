@@ -77,6 +77,8 @@ const everyRun = async () => {
     browser.privileged.messagingSystem.onCfrModelsSync.addListener(
       onCfrModelsSync,
     );
+
+    // Force sync here on add-on startup / browser startup?
   } catch (e) {
     onError(e);
   }
@@ -132,26 +134,28 @@ const onCfrModelsSync = async syncEvent => {
 
     console.info("Computing scores etc - TODO");
     let computedScores;
-    const blackboxPlaceholderBehavior = await browser.privileged.testingOverrides.getBlackboxPlaceholderBehavior();
-    console.debug({ blackboxPlaceholderBehavior });
-    switch (blackboxPlaceholderBehavior) {
-      case "zeroes":
+    const scoringBehaviorOverride = await browser.privileged.testingOverrides.getScoringBehaviorOverride();
+    console.debug({ scoringBehaviorOverride });
+    switch (scoringBehaviorOverride) {
+      case "zero":
         computedScores = {
-          BOOKMARK_SYNC_CFR: 0,
-          YOUTUBE_ENHANCE_3: 0,
+          PERSONALIZED_CFR_MESSAGE: 0,
         };
         break;
-      case "random_within_bounds":
+      case "two_thirds":
         computedScores = {
-          BOOKMARK_SYNC_CFR: 0.123,
-          YOUTUBE_ENHANCE_3: 0.456,
+          PERSONALIZED_CFR_MESSAGE: 2 / 3,
+        };
+        break;
+      case "random_between_0_and_10":
+        computedScores = {
+          PERSONALIZED_CFR_MESSAGE: Math.random() * 10,
         };
         break;
       default:
-      case "fixed_values":
+      case "fixed_value_over_threshold":
         computedScores = {
-          BOOKMARK_SYNC_CFR: 0.123,
-          YOUTUBE_ENHANCE_3: 0.456,
+          PERSONALIZED_CFR_MESSAGE: config.scoreThreshold * 1.1,
         };
         break;
     }

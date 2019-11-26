@@ -4,7 +4,7 @@ Accesses additional preferences used for study testing
 
 ## Functions
 
-### `browser.privileged.testingOverrides.getBlackboxPlaceholderBehavior( )`
+### `browser.privileged.testingOverrides.getScoringBehaviorOverride( )`
 
 **Parameters**
 

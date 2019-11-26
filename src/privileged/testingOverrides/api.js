@@ -16,23 +16,16 @@ this.testingOverrides = class extends ExtensionAPI {
     );
     const { ExtensionError } = ExtensionUtils;
 
-    const { extension } = this;
-
-    // Copied here from tree
-    function makeWidgetId(id) {
-      id = id.toLowerCase();
-      return id.replace(/[^a-z0-9_-]/g, "_");
-    }
-
-    const widgetId = makeWidgetId(extension.manifest.applications.gecko.id);
+    const addonTestPrefNamespace =
+      "extensions.messaging-system-personalization-experiment-1.test";
 
     return {
       privileged: {
         testingOverrides: {
-          getBlackboxPlaceholderBehavior: async function getBlackboxPlaceholderBehavior() {
+          getScoringBehaviorOverride: async function getScoringBehaviorOverride() {
             try {
               return Preferences.get(
-                `extensions.${widgetId}.test.surveyDaysFromExpiration`,
+                `${addonTestPrefNamespace}.scoringBehaviorOverride`,
                 false,
               );
             } catch (error) {
