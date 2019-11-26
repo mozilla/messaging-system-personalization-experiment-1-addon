@@ -106,13 +106,6 @@ const onUnenroll = async reason => {
   }
 };
 
-// For add-on debugging and development
-browser.browserAction.onClicked.addListener(async () => {
-  await browser.tabs.create({
-    url: "debug-page/index.html",
-  });
-});
-
 const onCfrModelsSync = async syncEvent => {
   try {
     console.log("onCfrModelsSync", { syncEvent });
