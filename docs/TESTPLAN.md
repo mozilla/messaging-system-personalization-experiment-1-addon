@@ -2,7 +2,7 @@
 
 ## Manual / QA TEST Instructions
 
-## Expected User Experience / Functionality
+### Expected User Experience / Functionality
 
 The add-on modifies certain preferences that affect how often and which messages from the messaging system are displayed.
 
