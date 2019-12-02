@@ -88,7 +88,6 @@ this.messagingSystem = class extends ExtensionAPI {
             try {
               const getterValues = await Promise.all(
                 gettersList.map(async getterReference => {
-                  console.log({ getterReference });
                   return ASRouterTargeting.Environment[getterReference];
                 }),
               );
