@@ -71,6 +71,7 @@ curl -X POST ${SERVER}/buckets/main/collections/${CID}/records \
 ```
 
 - Start firefox
+- Enable the "Enable browser chrome and addon-debugging toolboxes" switch in devtools settings.
 - Open the browser console using Firefox's top menu at `Tools > Web Developer > Browser Console`
 - Run the following in the browser console:
 
