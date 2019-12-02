@@ -39,21 +39,25 @@ this.messagingSystem = class extends ExtensionAPI {
     const PREF_ASROUTER_CFR_PROVIDER =
       "browser.newtabpage.activity-stream.asrouter.providers.cfr";
 
-    const generateCfrProviderPref = (
+    const getUpdatedCfrProviderPref = (
       bucket,
       cohort,
       personalizedModelVersion = null,
     ) => {
+      const existingValue = Services.prefs.getStringPref(
+        PREF_ASROUTER_CFR_PROVIDER,
+      );
+      if (!existingValue) {
+        throw new Error(
+          `The return value when getting the "${PREF_ASROUTER_CFR_PROVIDER}" pref is not truthy`,
+        );
+      }
+      const parsedExistingValue = JSON.parse(existingValue);
       return {
-        id: "cfr",
-        enabled: true,
-        type: "remote-settings",
+        ...parsedExistingValue,
         bucket,
         personalized: true,
         personalizedModelVersion: String(personalizedModelVersion),
-        frequency: { custom: [{ period: "daily", cap: 1 }] },
-        categories: ["cfrAddons", "cfrFeatures"],
-        updateCycleInMs: 3600000,
         cohort,
       };
     };
@@ -69,7 +73,7 @@ this.messagingSystem = class extends ExtensionAPI {
             try {
               // Get messages from the prepared CFR provider configuration
               // ASRouter reads list of CFR messages from `cfr-experiment`
-              const cfrProviderPref = generateCfrProviderPref(bucket, cohort);
+              const cfrProviderPref = getUpdatedCfrProviderPref(bucket, cohort);
               return MessageLoaderUtils.loadMessagesForProvider(
                 cfrProviderPref,
                 {},
@@ -111,7 +115,7 @@ this.messagingSystem = class extends ExtensionAPI {
             personalizedModelVersion,
           ) {
             try {
-              const cfrProviderPref = generateCfrProviderPref(
+              const cfrProviderPref = getUpdatedCfrProviderPref(
                 bucket,
                 cohort,
                 personalizedModelVersion,
