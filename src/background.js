@@ -12,7 +12,7 @@ const configByAddonId = {
       bucket: "cfr-experiment",
       cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT",
     },
-    scoreThreshold: 1.6,
+    scoreThreshold: 5000,
   },
 };
 const config = configByAddonId[browser.runtime.id];
@@ -130,58 +130,55 @@ const onCfrModelsSync = async syncEvent => {
     const scoringBehaviorOverride = await browser.privileged.testingOverrides.getScoringBehaviorOverride();
     console.debug({ scoringBehaviorOverride });
     switch (scoringBehaviorOverride) {
-      case "zero":
+      case "fixed_value_0":
         computedScores = {
           PERSONALIZED_CFR_MESSAGE: 0,
         };
         break;
-      case "two_thirds":
+      case "fixed_value_10000":
         computedScores = {
-          PERSONALIZED_CFR_MESSAGE: 2 / 3,
+          PERSONALIZED_CFR_MESSAGE: 10000,
         };
         break;
-      case "random_between_0_and_10":
+      case "fixed_value_slightly_below_threshold":
         computedScores = {
-          PERSONALIZED_CFR_MESSAGE: Math.random() * 10,
+          PERSONALIZED_CFR_MESSAGE: config.scoreThreshold - 1,
+        };
+        break;
+      case "fixed_value_slightly_over_threshold":
+        computedScores = {
+          PERSONALIZED_CFR_MESSAGE: config.scoreThreshold + 1,
+        };
+        break;
+      case "random_between_1_and_9999":
+        computedScores = {
+          PERSONALIZED_CFR_MESSAGE: Math.round(Math.random() * 9998 + 1),
         };
         break;
       default:
-      case "fixed_value_over_threshold":
-        computedScores = {
-          PERSONALIZED_CFR_MESSAGE: config.scoreThreshold * 1.1,
-        };
-        break;
+        computedScores = {};
     }
 
     console.info("Writing computed scores into prefs");
     await browser.privileged.personalizedCfrPrefs.setScores(computedScores);
 
-    console.info("Writing model version to pref");
-    await browser.privileged.personalizedCfrPrefs.setModelVersion(-1);
+    const personalizedModelVersion = -1;
 
-    const { syncCallbackHasRun } = await browser.storage.local.get(
-      "syncCallbackHasRun",
+    console.info("Sanity checking written prefs");
+    const scoreThreshold = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
+    const scores = await browser.privileged.personalizedCfrPrefs.getScores();
+    console.debug({ scoreThreshold, scores });
+    // TODO: Sanity check
+
+    console.info(
+      "Setting the CFR provider pref with bucket, cohort and personalizedModelVersion",
+      { bucket, cohort, personalizedModelVersion },
     );
-    if (syncCallbackHasRun !== true) {
-      console.info("Sanity checking written prefs");
-      const scoreThreshold = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
-      const scores = await browser.privileged.personalizedCfrPrefs.getScores();
-      const modelVersion = await browser.privileged.personalizedCfrPrefs.getModelVersion();
-      console.debug({ scoreThreshold, scores, modelVersion });
-      // TODO: Sanity check
-
-      console.info(
-        "Since this is the first time the onCfrModelsSync callback is " +
-          "running: Setting the CFR provider pref, hereby activating " +
-          "the experiment in the perspective of messaging system",
-      );
-      await browser.privileged.messagingSystem.setASRouterCfrProviderPref(
-        bucket,
-        cohort,
-      );
-
-      await browser.storage.local.set({ syncCallbackHasRun: true });
-    }
+    await browser.privileged.messagingSystem.setASRouterCfrProviderPref(
+      bucket,
+      cohort,
+      personalizedModelVersion,
+    );
 
     console.info("onCfrModelsSync callback finished");
   } catch (e) {

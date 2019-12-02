@@ -47,12 +47,12 @@
           {
             "name": "bucket",
             "type": "string",
-            "description": "The new bucket value"
+            "description": "The bucket value"
           },
           {
             "name": "cohort",
             "type": "string",
-            "description": "The new cohort value"
+            "description": "The cohort value"
           }
         ]
       },
@@ -87,6 +87,11 @@
             "name": "cohort",
             "type": "string",
             "description": "The new cohort value"
+          },
+          {
+            "name": "personalizedModelVersion",
+            "type": "number",
+            "description": "The new personalizedModelVersion value"
           }
         ]
       },

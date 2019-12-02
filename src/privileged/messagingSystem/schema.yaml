@@ -28,10 +28,10 @@
     parameters:
     - name: bucket
       type: string
-      description: The new bucket value
+      description: The bucket value
     - name: cohort
       type: string
-      description: The new cohort value
+      description: The cohort value
   - name: getASRouterTargetingGetters
     type: function
     async: true
@@ -53,6 +53,9 @@
     - name: cohort
       type: string
       description: The new cohort value
+    - name: personalizedModelVersion
+      type: number
+      description: The new personalizedModelVersion value
   - name: clearASRouterCfrProviderPref
     type: function
     async: true

@@ -39,12 +39,18 @@ this.messagingSystem = class extends ExtensionAPI {
     const PREF_ASROUTER_CFR_PROVIDER =
       "browser.newtabpage.activity-stream.asrouter.providers.cfr";
 
-    const generateCfrProviderPref = (bucket, cohort) => {
+    const generateCfrProviderPref = (
+      bucket,
+      cohort,
+      personalizedModelVersion = null,
+    ) => {
       return {
         id: "cfr",
         enabled: true,
         type: "remote-settings",
         bucket,
+        personalized: true,
+        personalizedModelVersion: String(personalizedModelVersion),
         frequency: { custom: [{ period: "daily", cap: 1 }] },
         categories: ["cfrAddons", "cfrFeatures"],
         updateCycleInMs: 3600000,
@@ -103,9 +109,14 @@ this.messagingSystem = class extends ExtensionAPI {
           setASRouterCfrProviderPref: async function setASRouterCfrProviderPref(
             bucket,
             cohort,
+            personalizedModelVersion,
           ) {
             try {
-              const cfrProviderPref = generateCfrProviderPref(bucket, cohort);
+              const cfrProviderPref = generateCfrProviderPref(
+                bucket,
+                cohort,
+                personalizedModelVersion,
+              );
               const stringifiedValue = JSON.stringify(cfrProviderPref);
               return Services.prefs.setStringPref(
                 PREF_ASROUTER_CFR_PROVIDER,

@@ -161,75 +161,114 @@ await AddonStudies.add({
 
 - Install the `control` add-on as per above
 - Verify that the study runs
-- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has a bucket value of `cfr-control` and a cohort value of `PERSONALIZATION_EXPERIMENT_1_CONTROL`
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
+  - `bucket: "cfr-control"`
+  - `cohort: "PERSONALIZATION_EXPERIMENT_1_CONTROL"`
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference does not have the following attributes:
+  - `personalized`
+  - `personalizedModelVersion`
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is empty or does not exist
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is empty or does not exist
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is empty or does not exist
 - Visit the Remote Settings Devtools page
 - Next to the cfr-models entry, click `Force Sync`.
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is empty or does not exist
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is empty or does not exist
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is empty or does not exist
 
-**Treatment sets the CFR bucket and cohort**
+**Treatment does not set the CFR bucket and cohort before the first update cycle has finisheds**
 
 - Install the `treatment` add-on as per above
 - Verify that the study runs
-- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has a bucket value of `cfr-experiment` and a cohort value of `PERSONALIZATION_EXPERIMENT_1_TREATMENT`
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has a `bucket` attribute with a value of `cfr`, no `cohort` attribute (or at least not one that starts with `PERSONALIZATION_EXPERIMENT_1_`), no `personalized` attribute and no `personalizedModelVersion` attribute.
 
 **Treatment updates scores upon each `cfr-models` Remote Settings bucket update**
 
 - Install the `treatment` add-on as per above
 - Verify that the study runs
-- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `random_between_0_and_10` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "random_between_0_and_10")`)
+- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `random_between_1_and_9999` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "random_between_1_and_9999")`)
 - Visit the Remote Settings Devtools page
 - Next to the `cfr-models` entry, click `Force Sync`
 - Wait a few seconds
-- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to `1.6`
-- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value between `0.0` and `10.0`
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is set to an integer (can be `-1` during testing/development)
+- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
+- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value between `1` and `9999`
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
+  - `bucket: "cfr-experiment"`
+  - `cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT"`
+  - `personalized: true`
+  - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 - Visit the Remote Settings Devtools page
 - Next to the `cfr-models` entry, click `Force Sync`
 - Wait a few seconds
-- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to `1.6`
-- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value between `0.0` and `10.0` (different from last time)
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is set to an integer (can be `-1` during testing/development)
+- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
+- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value between `1` and `9999` (different from last time)
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
+  - `bucket: "cfr-experiment"`
+  - `cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT"`
+  - `personalized: true`
+  - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 
 **Treatment updates scores to zero using a testing override**
 
 - Install the `treatment` add-on as per above
 - Verify that the study runs
-- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `zero` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "zero")`)
+- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `fixed_value_0` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "fixed_value_0")`)
 - Visit the Remote Settings Devtools page
 - Next to the `cfr-models` entry, click `Force Sync`
 - Wait a few seconds
-- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to `1.6`
+- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":0}`
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is set to an integer (can be `-1` during testing/development)
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
+  - `bucket: "cfr-experiment"`
+  - `cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT"`
+  - `personalized: true`
+  - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
+
+**Treatment updates scores to 10000 using a testing override**
+
+- Install the `treatment` add-on as per above
+- Verify that the study runs
+- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `fixed_value_10000` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "fixed_value_10000")`)
+- Visit the Remote Settings Devtools page
+- Next to the `cfr-models` entry, click `Force Sync`
+- Wait a few seconds
+- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
+- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":10000}`
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
+  - `bucket: "cfr-experiment"`
+  - `cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT"`
+  - `personalized: true`
+  - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 
 **Treatment updates scores to a value above the threshold using a testing override**
 
 - Install the `treatment` add-on as per above
 - Verify that the study runs
-- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `fixed_value_over_threshold` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "fixed_value_over_threshold")`)
+- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `fixed_value_slightly_over_threshold` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "fixed_value_slightly_over_threshold")`)
 - Visit the Remote Settings Devtools page
 - Next to the `cfr-models` entry, click `Force Sync`
 - Wait a few seconds
-- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to `1.6`
-- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value above `1.6`
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is set to an integer (can be `-1` during testing/development)
+- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
+- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value above `5000`
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
+  - `bucket: "cfr-experiment"`
+  - `cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT"`
+  - `personalized: true`
+  - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 
-**Treatment updates scores to 2/3 using a testing override**
+**Treatment updates scores to a value above the threshold using a testing override**
 
 - Install the `treatment` add-on as per above
 - Verify that the study runs
-- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `two_thirds` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "two_thirds")`)
+- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `fixed_value_slightly_over_threshold` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "fixed_value_slightly_over_threshold")`)
 - Visit the Remote Settings Devtools page
 - Next to the `cfr-models` entry, click `Force Sync`
 - Wait a few seconds
-- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to `1.6`
-- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":0.6666666666666666}`
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is set to an integer (can be `-1` during testing/development)
+- Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
+- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value above `5000`
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
+  - `bucket: "cfr-experiment"`
+  - `cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT"`
+  - `personalized: true`
+  - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 
 **Not showing in `about:addons`**
 
@@ -246,7 +285,7 @@ await AddonStudies.add({
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is empty or does not exist
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is empty or does not exist
 - Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is empty or does not exist
-- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has a bucket value of `cfr` and no cohort value (or at least not one that starts with `PERSONALIZATION_EXPERIMENT_1_`)
+- Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has a `bucket` attribute with a value of `cfr`, no `cohort` attribute (or at least not one that starts with `PERSONALIZATION_EXPERIMENT_1_`), no `personalized` attribute and no `personalizedModelVersion` attribute.
 
 ## Debug
 

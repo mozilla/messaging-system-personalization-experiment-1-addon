@@ -19,10 +19,9 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Get the `score-threshold` preference's value */
           getScoreThreshold: async function getScoreThreshold() {
             try {
-              const value = Services.prefs.getStringPref(
+              return Services.prefs.getIntPref(
                 `${prefNameBase}.score-threshold`,
               );
-              return parseFloat(value);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -33,10 +32,9 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           /* Set the `score-threshold` preference's value */
           setScoreThreshold: async function setScoreThreshold(value) {
             try {
-              const stringifiedValue = JSON.stringify(value);
-              return Services.prefs.setStringPref(
+              return Services.prefs.setIntPref(
                 `${prefNameBase}.score-threshold`,
-                stringifiedValue,
+                value,
               );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
@@ -91,44 +89,6 @@ this.personalizedCfrPrefs = class extends ExtensionAPI {
           clearScores: async function clearScores() {
             try {
               return Services.prefs.clearUserPref(`${prefNameBase}.scores`);
-            } catch (error) {
-              // Surface otherwise silent or obscurely reported errors
-              console.error(error.message, error.stack);
-              throw new ExtensionError(error.message);
-            }
-          },
-
-          /* Get the `model-version` preference's value */
-          getModelVersion: async function getModelVersion() {
-            try {
-              return Services.prefs.getIntPref(`${prefNameBase}.model-version`);
-            } catch (error) {
-              // Surface otherwise silent or obscurely reported errors
-              console.error(error.message, error.stack);
-              throw new ExtensionError(error.message);
-            }
-          },
-
-          /* Set the `model-version` preference's value */
-          setModelVersion: async function setModelVersion(value) {
-            try {
-              return Services.prefs.setIntPref(
-                `${prefNameBase}.model-version`,
-                value,
-              );
-            } catch (error) {
-              // Surface otherwise silent or obscurely reported errors
-              console.error(error.message, error.stack);
-              throw new ExtensionError(error.message);
-            }
-          },
-
-          /* Clear the `model-version` preference's non-default value */
-          clearModelVersion: async function clearModelVersion() {
-            try {
-              return Services.prefs.clearUserPref(
-                `${prefNameBase}.model-version`,
-              );
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);

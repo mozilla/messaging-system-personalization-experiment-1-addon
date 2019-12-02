@@ -50,29 +50,6 @@ Clear the `scores` preference's non-default value
 
 **Parameters**
 
-### `browser.privileged.personalizedCfrPrefs.getModelVersion( )`
-
-Get the `model-version` preference's value
-
-**Parameters**
-
-### `browser.privileged.personalizedCfrPrefs.setModelVersion( value )`
-
-Set the `model-version` preference's value
-
-**Parameters**
-
-- `value`
-  - type: value
-  - \$ref:
-  - optional: false
-
-### `browser.privileged.personalizedCfrPrefs.clearModelVersion( )`
-
-Clear the `model-version` preference's non-default value
-
-**Parameters**
-
 ## Events
 
 (None)

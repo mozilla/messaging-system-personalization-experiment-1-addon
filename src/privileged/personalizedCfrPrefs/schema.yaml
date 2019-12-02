@@ -40,22 +40,3 @@
     async: true
     description: Clear the `scores` preference's non-default value
     parameters: []
-
-  - name: getModelVersion
-    type: function
-    async: true
-    description: Get the `model-version` preference's value
-    parameters: []
-  - name: setModelVersion
-    type: function
-    async: true
-    description: Set the `model-version` preference's value
-    parameters:
-    - name: value
-      type: number
-      description: The new value
-  - name: clearModelVersion
-    type: function
-    async: true
-    description: Clear the `model-version` preference's non-default value
-    parameters: []

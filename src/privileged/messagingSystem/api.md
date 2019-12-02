@@ -32,7 +32,7 @@ getASRouterTargetingGetters
   - \$ref:
   - optional: false
 
-### `browser.privileged.messagingSystem.setASRouterCfrProviderPref( bucket, cohort )`
+### `browser.privileged.messagingSystem.setASRouterCfrProviderPref( bucket, cohort, personalizedModelVersion )`
 
 setASRouterCfrProviderPref
 
@@ -45,7 +45,13 @@ setASRouterCfrProviderPref
   - optional: false
 
 - `cohort`
+
   - type: cohort
+  - \$ref:
+  - optional: false
+
+- `personalizedModelVersion`
+  - type: personalizedModelVersion
   - \$ref:
   - optional: false
 
