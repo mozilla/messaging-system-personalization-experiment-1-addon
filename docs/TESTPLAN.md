@@ -153,7 +153,13 @@ await AddonStudies.add({
 });
 ```
 
-- Go to [this experiment's feature bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1594422) and install either the latest `control` or `treatment` add-on xpi file (Note: if you are installing an unsigned version of the add-on, you need to set `extensions.legacy.enabled` to `true` before installing the add-on)
+- Go to [this experiment's feature bug](https://bugzilla.mozilla.org/show_bug.cgi?id=1594422) and note which is the latest set of add-on xpi files
+- If the tested add-on is signed with the testing certificate set the following pref:
+  - Have the "xpinstall.signatures.required" boolean pref to "false".
+  - Have the "xpinstall.signatures.dev-root" boolean pref created with the "true" value.
+- If the tested add-on is not signed
+  - Have the "extensions.legacy.enabled" boolean pref created with the "true" value.
+- Install either the latest `control` or `treatment` add-on xpi file
 
 ### Do these tests (in addition to ordinary regression tests)
 
