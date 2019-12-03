@@ -9,14 +9,6 @@ XPCOMUtils.defineLazyModuleGetters(this, {
   RemoteSettings: "resource://services-settings/remote-settings.js",
 });
 
-async function getState() {
-  const inspected = await RemoteSettings.inspect();
-  return {
-    pollingEndpoint: RemoteSettings.pollingEndpoint,
-    ...inspected,
-  };
-}
-
 const allowListedCollections = ["cfr-control", "cfr-experiment", "cfr-models"];
 
 this.remoteSettings = class extends ExtensionAPI {
@@ -35,7 +27,6 @@ this.remoteSettings = class extends ExtensionAPI {
     return {
       privileged: {
         remoteSettings: {
-          getState,
           /* Triggers a synchronization at the level only for the specified collection */
           clearLocalDataAndForceSync: async function clearLocalDataAndForceSync(
             collection,

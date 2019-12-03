@@ -46,15 +46,6 @@ const run = async () => {
 };
 
 const firstRun = async () => {
-  console.info("Reading/refreshing remote settings state");
-  const remoteSettingsState = await browser.privileged.remoteSettings.getState();
-  console.log({ remoteSettingsState });
-
-  remoteSettingsState.collections.forEach(status => {
-    console.debug({ status });
-    // await remotesettings.clearLocalDataAndForceSync(bucket, collection);
-  });
-
   console.info(`Force syncing "${bucket}" bucket contents`);
   await browser.privileged.remoteSettings.clearLocalDataAndForceSync(bucket);
 
