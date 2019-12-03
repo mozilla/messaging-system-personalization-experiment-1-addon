@@ -7,3 +7,8 @@
     async: true
     description: ''
     parameters: []
+  - name: getPeriodicPollingPeriodInMinutesOverride
+    type: 'function'
+    async: true
+    description: ''
+    parameters: []

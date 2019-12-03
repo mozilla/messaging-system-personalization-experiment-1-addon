@@ -34,6 +34,22 @@ this.testingOverrides = class extends ExtensionAPI {
               throw new ExtensionError(error.message);
             }
           },
+          getPeriodicPollingPeriodInMinutesOverride: async function getPeriodicPollingPeriodInMinutesOverride() {
+            try {
+              const value = Preferences.get(
+                `${addonTestPrefNamespace}.periodicPollingPeriodInMinutesOverride`,
+                false,
+              );
+              if (!value) {
+                return false;
+              }
+              return parseFloat(value);
+            } catch (error) {
+              // Surface otherwise silent or obscurely reported errors
+              console.error(error.message, error.stack);
+              throw new ExtensionError(error.message);
+            }
+          },
         },
       },
     };

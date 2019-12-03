@@ -19,6 +19,7 @@ const config = configByAddonId[browser.runtime.id];
 const { bucket, cohort } = config.asRouterCfrProviderConfig;
 console.info("Experiment add-on background.js", browser.runtime.id);
 console.debug({ config });
+const periodicAlarmName = `${browser.runtime.id}:periodicCfrModelsPolling`;
 
 const onError = e => {
   console.error(e);
@@ -45,23 +46,31 @@ const run = async () => {
 };
 
 const firstRun = async () => {
-  try {
-    if (config.branch === "control") {
-      console.info("Writing hard-coded provider cfr pref", { bucket, cohort });
-      await browser.privileged.messagingSystem.setASRouterCfrProviderPref(
-        bucket,
-        cohort,
-      );
-      return;
-    }
+  console.info("Reading/refreshing remote settings state");
+  const remoteSettingsState = await browser.privileged.remoteSettings.getState();
+  console.log({ remoteSettingsState });
 
-    console.info("Writing hard-coded score threshold", config.scoreThreshold);
-    await browser.privileged.personalizedCfrPrefs.setScoreThreshold(
-      config.scoreThreshold,
+  remoteSettingsState.collections.forEach(status => {
+    console.debug({ status });
+    // await remotesettings.clearLocalDataAndForceSync(bucket, collection);
+  });
+
+  console.info(`Force syncing "${bucket}" bucket contents`);
+  await browser.privileged.remoteSettings.clearLocalDataAndForceSync(bucket);
+
+  if (config.branch === "control") {
+    console.info("Writing hard-coded provider cfr pref", { bucket, cohort });
+    await browser.privileged.messagingSystem.setASRouterCfrProviderPref(
+      bucket,
+      cohort,
     );
-  } catch (e) {
-    onError(e);
+    return;
   }
+
+  console.info("Writing hard-coded score threshold", config.scoreThreshold);
+  await browser.privileged.personalizedCfrPrefs.setScoreThreshold(
+    config.scoreThreshold,
+  );
 };
 
 const everyRun = async () => {
@@ -78,7 +87,23 @@ const everyRun = async () => {
       onCfrModelsSync,
     );
 
-    // Force sync here on add-on startup / browser startup?
+    // Force sync after 10 seconds and then every 60 minutes
+    const alarmListener = async alarm => {
+      if (alarm.name === periodicAlarmName) {
+        console.info(`Force syncing "cfr-models" bucket contents`);
+        await browser.privileged.remoteSettings.clearLocalDataAndForceSync(
+          "cfr-models",
+        );
+      }
+    };
+    browser.alarms.onAlarm.addListener(alarmListener);
+    const delayInMinutes = (1 / 60.0) * 10; // 10 seconds
+    const periodInMinutesOverride = await browser.privileged.testingOverrides.getPeriodicPollingPeriodInMinutesOverride();
+    const periodInMinutes = periodInMinutesOverride || 60.0;
+    browser.alarms.create(periodicAlarmName, {
+      delayInMinutes,
+      periodInMinutes,
+    });
   } catch (e) {
     onError(e);
   }
@@ -87,6 +112,7 @@ const everyRun = async () => {
 const onUnenroll = async reason => {
   console.info("Unenrolling", { reason });
   try {
+    await browser.alarms.clear(periodicAlarmName);
     await browser.privileged.messagingSystem.clearASRouterCfrProviderPref();
 
     // Do nothing more in control branch

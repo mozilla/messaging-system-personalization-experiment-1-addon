@@ -1,0 +1,28 @@
+[
+  {
+    "namespace": "privileged.remoteSettings",
+    "description": "Remote Settings",
+    "functions": [
+      {
+        "name": "getState",
+        "type": "function",
+        "description": "Return current state",
+        "async": true,
+        "parameters": []
+      },
+      {
+        "name": "clearLocalDataAndForceSync",
+        "type": "function",
+        "description": "Triggers a synchronization at the level only for the specified collection",
+        "async": true,
+        "parameters": [
+          {
+            "name": "collection",
+            "type": "string",
+            "description": "collection name"
+          }
+        ]
+      }
+    ]
+  }
+]
