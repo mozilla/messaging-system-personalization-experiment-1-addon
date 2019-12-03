@@ -281,8 +281,9 @@ await AddonStudies.add({
 - Unenroll a client using the Normandy staging server
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is empty or does not exist
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is empty or does not exist
-- Verify that the `browser.messaging-system.personalized-cfr.model-version` preference is empty or does not exist
 - Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has a `bucket` attribute with a value of `cfr`, no `cohort` attribute (or at least not one that starts with `PERSONALIZATION_EXPERIMENT_1_`), no `personalized` attribute and no `personalizedModelVersion` attribute.
+
+Note: To test this without a Normandy staging server, make sure that you have run `AddonStudies.add(....)` in the browser console, then open the `Inspect` toolbox next to the add-on in `about:debugging#/runtime/this-firefox`, and in that console run `await browser.normandyAddonStudy.endStudy("FOO");`. The toolbox will crash as the add-on gets uninstalled, but you will be able to verify the effects by checking the pref values.
 
 ## Debug
 

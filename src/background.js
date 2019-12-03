@@ -103,7 +103,6 @@ const everyRun = async () => {
 const onUnenroll = async reason => {
   console.info("Unenrolling", { reason });
   try {
-    await browser.alarms.clear(periodicAlarmName);
     await browser.privileged.messagingSystem.clearASRouterCfrProviderPref();
 
     // Do nothing more in control branch
@@ -111,12 +110,12 @@ const onUnenroll = async reason => {
       return;
     }
 
+    await browser.alarms.clear(periodicAlarmName);
     browser.privileged.messagingSystem.onCfrModelsSync.removeListener(
       onCfrModelsSync,
     );
     await browser.privileged.personalizedCfrPrefs.clearScoreThreshold();
     await browser.privileged.personalizedCfrPrefs.clearScores();
-    await browser.privileged.personalizedCfrPrefs.clearModelVersion();
   } catch (e) {
     console.error("Error occurred in the unenroll callback");
     console.error(e);
