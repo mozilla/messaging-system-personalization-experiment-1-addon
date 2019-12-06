@@ -53,7 +53,7 @@ setASRouterCfrProviderPref
 - `personalizedModelVersion`
   - type: personalizedModelVersion
   - \$ref:
-  - optional: false
+  - optional: true
 
 ### `browser.privileged.messagingSystem.clearASRouterCfrProviderPref( )`
 

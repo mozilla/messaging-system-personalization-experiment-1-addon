@@ -91,6 +91,7 @@
           {
             "name": "personalizedModelVersion",
             "type": "number",
+            "optional": true,
             "description": "The new personalizedModelVersion value"
           }
         ]

@@ -53,13 +53,19 @@ this.messagingSystem = class extends ExtensionAPI {
         );
       }
       const parsedExistingValue = JSON.parse(existingValue);
-      return {
+      let newValue = {
         ...parsedExistingValue,
         bucket,
-        personalized: true,
-        personalizedModelVersion: String(personalizedModelVersion),
         cohort,
       };
+      if (personalizedModelVersion !== null) {
+        newValue = {
+          ...newValue,
+          personalized: true,
+          personalizedModelVersion: String(personalizedModelVersion),
+        };
+      }
+      return newValue;
     };
 
     return {
@@ -112,7 +118,7 @@ this.messagingSystem = class extends ExtensionAPI {
           setASRouterCfrProviderPref: async function setASRouterCfrProviderPref(
             bucket,
             cohort,
-            personalizedModelVersion,
+            personalizedModelVersion = null,
           ) {
             try {
               const cfrProviderPref = getUpdatedCfrProviderPref(

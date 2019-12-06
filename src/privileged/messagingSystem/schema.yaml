@@ -55,6 +55,7 @@
       description: The new cohort value
     - name: personalizedModelVersion
       type: number
+      optional: true
       description: The new personalizedModelVersion value
   - name: clearASRouterCfrProviderPref
     type: function
