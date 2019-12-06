@@ -4,12 +4,6 @@ Remote Settings
 
 ## Functions
 
-### `browser.privileged.remoteSettings.getState( )`
-
-Return current state
-
-**Parameters**
-
 ### `browser.privileged.remoteSettings.clearLocalDataAndForceSync( collection )`
 
 Triggers a synchronization at the level only for the specified collection
