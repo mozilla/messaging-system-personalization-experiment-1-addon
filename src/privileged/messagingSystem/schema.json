@@ -1,0 +1,121 @@
+[
+  {
+    "namespace": "privileged.messagingSystem",
+    "description": "Access to certain parts of the messaging system",
+    "types": [
+      {
+        "id": "syncEvent",
+        "$schema": "http://json-schema.org/draft-04/schema",
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "object",
+            "properties": {
+              "created": {
+                "type": "array"
+              },
+              "current": {
+                "type": "array"
+              },
+              "deleted": {
+                "type": "array"
+              },
+              "updated": {
+                "type": "array"
+              }
+            }
+          }
+        },
+        "required": ["data"],
+        "testcase": {
+          "data": {
+            "created": [],
+            "current": [],
+            "deleted": [],
+            "updated": []
+          }
+        }
+      }
+    ],
+    "functions": [
+      {
+        "name": "getCfrBucketMessages",
+        "type": "function",
+        "async": true,
+        "description": "getCfrBucketMessages",
+        "parameters": [
+          {
+            "name": "bucket",
+            "type": "string",
+            "description": "The bucket value"
+          },
+          {
+            "name": "cohort",
+            "type": "string",
+            "description": "The cohort value"
+          }
+        ]
+      },
+      {
+        "name": "getASRouterTargetingGetters",
+        "type": "function",
+        "async": true,
+        "description": "getASRouterTargetingGetters",
+        "parameters": [
+          {
+            "name": "gettersList",
+            "type": "array",
+            "description": "Array of strings specifying which targeting getters to get",
+            "items": {
+              "type": "string"
+            }
+          }
+        ]
+      },
+      {
+        "name": "setASRouterCfrProviderPref",
+        "type": "function",
+        "async": true,
+        "description": "setASRouterCfrProviderPref",
+        "parameters": [
+          {
+            "name": "bucket",
+            "type": "string",
+            "description": "The new bucket value"
+          },
+          {
+            "name": "cohort",
+            "type": "string",
+            "description": "The new cohort value"
+          },
+          {
+            "name": "personalizedModelVersion",
+            "type": "number",
+            "optional": true,
+            "description": "The new personalizedModelVersion value"
+          }
+        ]
+      },
+      {
+        "name": "clearASRouterCfrProviderPref",
+        "type": "function",
+        "async": true,
+        "description": "clearASRouterCfrProviderPref",
+        "parameters": []
+      }
+    ],
+    "events": [
+      {
+        "name": "onCfrModelsSync",
+        "type": "function",
+        "description": "Fires when the Cfr models remote settings bucket has been updated.",
+        "parameters": [
+          {
+            "name": "syncEvent",
+            "$ref": "syncEvent"
+          }
+        ]
+      }
+    ]
+  }
+]

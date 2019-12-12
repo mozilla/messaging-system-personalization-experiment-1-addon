@@ -1,0 +1,14 @@
+- namespace: privileged.testingOverrides
+  description: Accesses additional preferences used for study testing
+
+  functions:
+  - name: getScoringBehaviorOverride
+    type: 'function'
+    async: true
+    description: ''
+    parameters: []
+  - name: getPeriodicPollingPeriodInMinutesOverride
+    type: 'function'
+    async: true
+    description: ''
+    parameters: []

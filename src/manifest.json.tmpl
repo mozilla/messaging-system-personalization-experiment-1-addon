@@ -28,6 +28,14 @@
         "paths": [["privileged", "personalizedCfrPrefs"]]
       }
     },
+    "remoteSettings": {
+      "schema": "./privileged/remoteSettings/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./privileged/remoteSettings/api.js",
+        "paths": [["privileged", "remoteSettings"]]
+      }
+    },
     "testingOverrides": {
       "schema": "./privileged/testingOverrides/schema.json",
       "parent": {
@@ -38,11 +46,9 @@
     }
   },
 
-  "browser_action": {},
-
   "background": {
     "scripts": ["background.js"]
   },
 
-  "permissions": ["normandyAddonStudy", "storage"]
+  "permissions": ["normandyAddonStudy", "storage", "alarms"]
 }
