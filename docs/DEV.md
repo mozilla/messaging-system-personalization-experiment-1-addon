@@ -4,12 +4,12 @@
 
 ### What the add-on does
 
-- Imports model from remote settings (`cfr-models` bucket)
+- Imports model from remote settings (`cfr-ml-model` bucket)
   - Drives update cycle so that the computations gets updated on each update. (No need to in the add-on to hard code a periodic update cycle with this setup.)
 - Prepares the updated CFR provider pref that will activate the experiment (modifying `bucket` and `cohort`, but does not set it yet
 - Imports
   - Get messages from `MessageLoaderUtils` (in `ASRouter.jsm`) using the prepared CFR provider configuration
-  - `MessageLoaderUtils` reads list of CFR messages from `cfr-experiment`
+  - `MessageLoaderUtils` reads list of CFR messages from `cfr-ml-experiments`
 - Imports `ASRouterTargeting.jsm` to get targeting getter values (for model inputs)
 - Computes scores
   - Intent is to offload computation during idle and not impact startup performance

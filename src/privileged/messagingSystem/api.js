@@ -78,7 +78,7 @@ this.messagingSystem = class extends ExtensionAPI {
           ) {
             try {
               // Get messages from the prepared CFR provider configuration
-              // ASRouter reads list of CFR messages from `cfr-experiment`
+              // ASRouter reads list of CFR messages from `cfr-ml-experiments`
               const cfrProviderPref = getUpdatedCfrProviderPref(bucket, cohort);
               return MessageLoaderUtils.loadMessagesForProvider(
                 cfrProviderPref,
@@ -158,9 +158,9 @@ this.messagingSystem = class extends ExtensionAPI {
               const listener = async (...args) => {
                 await fire.async(...args);
               };
-              RemoteSettings("cfr-models").on("sync", listener);
+              RemoteSettings("cfr-ml-model").on("sync", listener);
               return () => {
-                RemoteSettings("cfr-models").off("sync", listener);
+                RemoteSettings("cfr-ml-model").off("sync", listener);
               };
             },
           }).api(),

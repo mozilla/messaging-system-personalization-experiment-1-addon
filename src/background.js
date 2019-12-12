@@ -2,14 +2,14 @@ const configByAddonId = {
   "messaging-system-personalization-experiment-1-addon-control@mozilla.org": {
     branch: "control",
     asRouterCfrProviderConfig: {
-      bucket: "cfr-control",
+      bucket: "cfr-ml-control",
       cohort: "PERSONALIZATION_EXPERIMENT_1_CONTROL",
     },
   },
   "messaging-system-personalization-experiment-1-addon-treatment@mozilla.org": {
     branch: "treatment",
     asRouterCfrProviderConfig: {
-      bucket: "cfr-experiment",
+      bucket: "cfr-ml-experiments",
       cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT",
     },
     scoreThreshold: 5000,
@@ -71,7 +71,7 @@ const everyRun = async () => {
       return;
     }
 
-    // Imports models from remote settings (`cfr-models` bucket)
+    // Imports models from remote settings (`cfr-ml-model` bucket)
     // Drives update cycle so that the computations gets updated on each update
     console.info("Subscribing to model updates from remote settings");
     browser.privileged.messagingSystem.onCfrModelsSync.addListener(
@@ -81,9 +81,9 @@ const everyRun = async () => {
     // Force sync after 10 seconds and then every 60 minutes
     const alarmListener = async alarm => {
       if (alarm.name === periodicAlarmName) {
-        console.info(`Force syncing "cfr-models" bucket contents`);
+        console.info(`Force syncing "cfr-ml-model" bucket contents`);
         await browser.privileged.remoteSettings.clearLocalDataAndForceSync(
-          "cfr-models",
+          "cfr-ml-model",
         );
       }
     };
@@ -128,7 +128,7 @@ const onCfrModelsSync = async syncEvent => {
     const { data } = syncEvent;
     console.log({ data });
 
-    console.info("Getting current messages from `cfr-experiment`");
+    console.info("Getting current messages from `cfr-ml-experiments`");
     const cfrExperimentMessages = await browser.privileged.messagingSystem.getCfrBucketMessages(
       bucket,
       cohort,
