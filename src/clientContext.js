@@ -60,7 +60,7 @@ const getClientContext = async () => {
     has_at_least_one_login_saved_in_the_browser:
       (await browser.privileged.clientContext.getLoginsSavedInBrowserCount()) >
       0,
-    firefox_accounts_configured: await browser.privileged.clientContext.getFxAConfigured(), // TODO (related getters: usesFirefoxSync, isFxAEnabled, sync) clarify then implement
+    firefox_accounts_configured: await browser.privileged.clientContext.getFxAConfigured(),
     locale: asRouterTargetingGetters.locale,
     profile_age: Date.now() - asRouterTargetingGetters.profileAgeCreated,
     main_monitor_screen_width: await browser.privileged.clientContext.getMainMonitorScreenWidth(),

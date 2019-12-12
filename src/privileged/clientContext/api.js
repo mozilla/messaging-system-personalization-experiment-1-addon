@@ -24,6 +24,36 @@ this.clientContext = class extends ExtensionAPI {
       {},
     );
 
+    // Based on https://dxr.mozilla.org/mozilla-central/source/browser/components/aboutconfig/content/aboutconfig.js#106-111
+    const GETTERS_BY_PREF_TYPE = {
+      [Ci.nsIPrefBranch.PREF_BOOL]: "getBoolPref",
+      [Ci.nsIPrefBranch.PREF_INT]: "getIntPref",
+      [Ci.nsIPrefBranch.PREF_STRING]: "getStringPref",
+    };
+    const gDefaultBranch = Services.prefs.getDefaultBranch("");
+    const hasDefaultValue = prefName => {
+      const prefType = Services.prefs.getPrefType(prefName);
+      // Non-existing pref values are treated as default values
+      if (prefType === 0) {
+        return true;
+      }
+      try {
+        const getter = GETTERS_BY_PREF_TYPE[prefType];
+        gDefaultBranch[getter](prefName);
+        return true;
+      } catch (ex) {
+        if (ex.name === "NS_ERROR_UNEXPECTED") {
+          return false;
+        }
+        const errorMessage = "Get default branch value unexpected exception";
+        console.debug(errorMessage, ex, {
+          prefName,
+          prefType,
+        });
+        throw new ExtensionError(errorMessage);
+      }
+    };
+
     return {
       privileged: {
         clientContext: {
@@ -514,37 +544,6 @@ this.clientContext = class extends ExtensionAPI {
 
               const preferencesToCheck = getPreferencesToCheck();
 
-              // Based on https://dxr.mozilla.org/mozilla-central/source/browser/components/aboutconfig/content/aboutconfig.js#106-111
-              const GETTERS_BY_PREF_TYPE = {
-                [Ci.nsIPrefBranch.PREF_BOOL]: "getBoolPref",
-                [Ci.nsIPrefBranch.PREF_INT]: "getIntPref",
-                [Ci.nsIPrefBranch.PREF_STRING]: "getStringPref",
-              };
-              const gDefaultBranch = Services.prefs.getDefaultBranch("");
-              const hasDefaultValue = prefName => {
-                const prefType = Services.prefs.getPrefType(prefName);
-                // Non-existing pref values are treated as default values
-                if (prefType === 0) {
-                  return true;
-                }
-                try {
-                  const getter = GETTERS_BY_PREF_TYPE[prefType];
-                  gDefaultBranch[getter](prefName);
-                  return true;
-                } catch (ex) {
-                  if (ex.name === "NS_ERROR_UNEXPECTED") {
-                    return false;
-                  }
-                  const errorMessage =
-                    "Get default branch value unexpected exception";
-                  console.debug(errorMessage, ex, {
-                    prefName,
-                    prefType,
-                  });
-                  throw new ExtensionError(errorMessage);
-                }
-              };
-
               // loop through the prefs listed in about:preferences, and look for non-default values
               const preferencesWithNonDefaultValues = preferencesToCheck.filter(
                 preference => {
@@ -568,9 +567,16 @@ this.clientContext = class extends ExtensionAPI {
           /* Get whether or not Firefox accounts are configured */
           getFxAConfigured: async function getFxAConfigured() {
             try {
-              // , based on identity.fxaccounts.account.device.name and identity.fxaccounts.lastSignedInUserHash
-              console.log("Called getFxAConfigured()");
-              return undefined;
+              const fxaPreferencesWithNonDefaultValues = [
+                "identity.fxaccounts.account.device.name",
+                "identity.fxaccounts.lastSignedInUserHash",
+              ].filter(fxaPreference => {
+                return !hasDefaultValue(fxaPreference);
+              });
+              console.debug({
+                fxaPreferencesWithNonDefaultValues,
+              });
+              return fxaPreferencesWithNonDefaultValues.length > 0;
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
