@@ -10,3 +10,11 @@
     - name: collection
       type: string
       description: collection name
+  - name: fetchFromEndpointDirectly
+    type: function
+    description: Fetch the data for the specified collection by querying the remote settings endpoint directly
+    async: true
+    parameters:
+    - name: collection
+      type: string
+      description: collection name

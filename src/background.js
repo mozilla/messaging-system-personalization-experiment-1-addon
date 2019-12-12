@@ -71,20 +71,16 @@ const everyRun = async () => {
       return;
     }
 
-    // Imports models from remote settings (`cfr-ml-model` bucket)
+    // Poll endpoint after 10 seconds and then every 60 minutes
     // Drives update cycle so that the computations gets updated on each update
-    console.info("Subscribing to model updates from remote settings");
-    browser.privileged.messagingSystem.onCfrModelsSync.addListener(
-      onCfrModelsSync,
-    );
-
-    // Force sync after 10 seconds and then every 60 minutes
     const alarmListener = async alarm => {
       if (alarm.name === periodicAlarmName) {
         console.info(`Force syncing "cfr-ml-model" bucket contents`);
-        await browser.privileged.remoteSettings.clearLocalDataAndForceSync(
+        // Imports models from remote settings (`cfr-ml-model` bucket)
+        const cfrMlModelsCollectionRecords = await browser.privileged.remoteSettings.fetchFromEndpointDirectly(
           "cfr-ml-model",
         );
+        await computeScores(cfrMlModelsCollectionRecords);
       }
     };
     browser.alarms.onAlarm.addListener(alarmListener);
@@ -111,9 +107,6 @@ const onUnenroll = async reason => {
     }
 
     await browser.alarms.clear(periodicAlarmName);
-    browser.privileged.messagingSystem.onCfrModelsSync.removeListener(
-      onCfrModelsSync,
-    );
     await browser.privileged.personalizedCfrPrefs.clearScoreThreshold();
     await browser.privileged.personalizedCfrPrefs.clearScores();
   } catch (e) {
@@ -122,11 +115,9 @@ const onUnenroll = async reason => {
   }
 };
 
-const onCfrModelsSync = async syncEvent => {
+const computeScores = async cfrMlModelsCollectionRecords => {
   try {
-    console.log("onCfrModelsSync", { syncEvent });
-    const { data } = syncEvent;
-    console.log({ data });
+    console.debug({ cfrMlModelsCollectionRecords });
 
     console.info(`Getting current messages from "${bucket}"`);
     const cfrExperimentMessages = await browser.privileged.messagingSystem.getCfrProviderMessages(

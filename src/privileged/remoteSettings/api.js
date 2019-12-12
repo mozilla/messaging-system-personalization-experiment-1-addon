@@ -1,5 +1,5 @@
 /* eslint no-console: ["warn", { allow: ["info", "warn", "error"] }] */
-/* global ExtensionAPI, XPCOMUtils */
+/* global ExtensionAPI, XPCOMUtils, Cu */
 
 "use strict";
 
@@ -8,6 +8,8 @@ ChromeUtils.import("resource://gre/modules/XPCOMUtils.jsm");
 XPCOMUtils.defineLazyModuleGetters(this, {
   RemoteSettings: "resource://services-settings/remote-settings.js",
 });
+
+Cu.importGlobalProperties(["fetch"]);
 
 const allowListedCollections = [
   "cfr-ml-control",
@@ -53,6 +55,41 @@ this.remoteSettings = class extends ExtensionAPI {
               const kintoCol = await client.openCollection();
               await kintoCol.clear();
               await client.sync();
+            } catch (error) {
+              // Surface otherwise silent or obscurely reported errors
+              console.error(error.message, error.stack);
+              throw new ExtensionError(error.message);
+            }
+          },
+          /* Fetch the data for the specified collection by querying the remote settings endpoint directly */
+          fetchFromEndpointDirectly: async function fetchFromEndpointDirectly(
+            collection,
+          ) {
+            if (!allowListedCollections.includes(collection)) {
+              throw new ExtensionError(
+                `This method is not allowed for collection "${collection}"`,
+              );
+            }
+            try {
+              const remoteSettingsServer = Services.prefs.getStringPref(
+                "services.settings.server",
+              );
+              const endpoint = `${remoteSettingsServer}${
+                remoteSettingsServer.endsWith("/") ? "" : "/"
+              }buckets/main/collections/${collection}/records`;
+              const response = await fetch(endpoint).catch(async error => {
+                throw new Error(error);
+              });
+              if (!response) {
+                throw new Error("Fetched remote settings response empty");
+              }
+              const parsed = await response.json();
+              if (!parsed || !parsed.data) {
+                throw new Error(
+                  "Fetched remote settings response was incorrectly encoded",
+                );
+              }
+              return parsed.data;
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
