@@ -119,8 +119,6 @@ const onUnenroll = async reason => {
 
 const computeScores = async cfrMlModelsCollectionRecords => {
   try {
-    console.debug({ cfrMlModelsCollectionRecords });
-
     const cfrMlModelsRecordOfInterest = cfrMlModelsCollectionRecords[0];
     console.debug({ cfrMlModelsRecordOfInterest });
 

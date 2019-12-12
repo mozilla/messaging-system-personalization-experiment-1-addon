@@ -30,7 +30,7 @@ const getClientContext = async () => {
       !theme.blocklisted &&
       !theme.userDisabled &&
       ![
-        // TODO: Compile list of themes shipped with firefox here
+        // TODO: Compile list of themes shipped with various versions of firefox here
         "firefox-compact-dark@mozilla.org",
       ].includes(theme.id),
   );
@@ -42,17 +42,18 @@ const getClientContext = async () => {
   });
 
   console.info(
-    "Getting model inputs from clientContext web extension experiment API",
+    "Merging with model inputs from clientContext web extension experiment API",
   );
 
   return {
-    have_firefox_as_default_browser: asRouterTargetingGetters.isDefaultBrowser,
+    has_firefox_as_default_browser: asRouterTargetingGetters.isDefaultBrowser,
     active_ticks: await browser.privileged.clientContext.getActiveTicks(),
     total_uri_count: await browser.privileged.clientContext.getTotalUriCount(),
     about_preferences_non_default_value_count: await browser.privileged.clientContext.getAboutPreferencesNonDefaultValueCount(),
     has_at_least_one_self_installed_addon:
       listOfSelfInstalledEnabledAddons.length > 0,
     has_at_least_one_self_installed_password_manager: "TODO", // TODO
+    has_at_least_one_self_installed_adblocker: "TODO", // TODO
     has_at_least_one_self_installed_theme:
       listOfSelfInstalledEnabledThemes.length > 0,
     dark_mode_active: await browser.privileged.clientContext.getDarkModeActive(),
