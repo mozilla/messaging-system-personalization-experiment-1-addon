@@ -121,12 +121,16 @@ const computeScores = async cfrMlModelsCollectionRecords => {
   try {
     console.debug({ cfrMlModelsCollectionRecords });
 
+    const cfrMlModelsRecordOfInterest = cfrMlModelsCollectionRecords[0];
+    console.debug({ cfrMlModelsRecordOfInterest });
+
     console.info(`Getting current messages from "${bucket}"`);
-    const cfrExperimentMessages = await browser.privileged.messagingSystem.getCfrProviderMessages(
+    const cfrExperimentProviderMessages = await browser.privileged.messagingSystem.getCfrProviderMessages(
       bucket,
       cohort,
     );
-    console.log({ cfrExperimentMessages });
+    const experimentCfrs = cfrExperimentProviderMessages.messages;
+    console.log({ experimentCfrs });
 
     console.info(`Getting current client context`);
     const clientContext = await getClientContext();

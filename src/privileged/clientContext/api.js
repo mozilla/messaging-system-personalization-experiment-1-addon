@@ -59,7 +59,7 @@ this.clientContext = class extends ExtensionAPI {
           /* Get number of prefs changed (specifically those in about:preferences) */
           getAboutPreferencesNonDefaultValueCount: async function getAboutPreferencesNonDefaultValueCount() {
             try {
-              // Note: The list of preferences shown on about:preferences that we check are to the ones
+              // Note: The list of preferences shown on about:preferences that we check are the ones
               // that are found as arguments to Preferences.addAll() in mozilla-central/browser/components/preferences
               // hence this copy-paste way of getting that list into this method's code block
               const getPreferencesToCheck = () => {
@@ -605,10 +605,6 @@ this.clientContext = class extends ExtensionAPI {
           getMainMonitorScreenWidth: async function getMainMonitorScreenWidth() {
             try {
               const environment = TelemetryEnvironment.currentEnvironment;
-              console.log(
-                "TelemetryEnvironment.currentEnvironment",
-                environment,
-              );
               return environment.system.gfx.monitors[0]
                 ? environment.system.gfx.monitors[0].screenWidth
                 : undefined;
