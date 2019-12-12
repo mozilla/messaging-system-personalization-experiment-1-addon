@@ -592,9 +592,8 @@ this.clientContext = class extends ExtensionAPI {
           /* Get count of logins saved in the browser */
           getLoginsSavedInBrowserCount: async function getLoginsSavedInBrowserCount() {
             try {
-              //  await Services.logins.getAllLogins();
-              console.log("Called getLoginsSavedInBrowserCount()");
-              return undefined;
+              const allLogins = await Services.logins.getAllLogins();
+              return allLogins ? allLogins.length : 0;
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
