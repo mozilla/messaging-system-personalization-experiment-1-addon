@@ -253,14 +253,14 @@ await AddonStudies.add({
   - `personalized: true`
   - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 
-**Treatment updates scores to a value above the threshold using a testing override**
+**Treatment updates scores to a value below the threshold using a testing override**
 
-- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `fixed_value_slightly_over_threshold` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "fixed_value_slightly_over_threshold")`)
+- Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `fixed_value_slightly_below_threshold` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "fixed_value_slightly_below_threshold")`)
 - Install the `treatment` add-on as per above
 - Verify that the study runs
 - Wait about 10 seconds for the first sync to be triggered
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
-- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value above `5000`
+- Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value below `5000`
 - Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has the following attributes:
   - `bucket: "cfr-ml-experiments"`
   - `cohort: "PERSONALIZATION_EXPERIMENT_1_TREATMENT"`
