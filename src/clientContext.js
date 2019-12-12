@@ -57,9 +57,9 @@ const getClientContext = async () => {
       listOfSelfInstalledEnabledThemes.length > 0,
     dark_mode_active: await browser.privileged.clientContext.getDarkModeActive(),
     total_bookmarks_count: asRouterTargetingGetters.totalBookmarksCount,
-    has_at_least_two_logins_saved_in_the_browser:
-      (await browser.privileged.clientContext.getLoginsSavedInBrowserCount()) >=
-      2,
+    has_at_least_one_login_saved_in_the_browser:
+      (await browser.privileged.clientContext.getLoginsSavedInBrowserCount()) >
+      0,
     firefox_accounts_configured: await browser.privileged.clientContext.getFxAConfigured(), // TODO (related getters: usesFirefoxSync, isFxAEnabled, sync) clarify then implement
     locale: asRouterTargetingGetters.locale,
     profile_age: Date.now() - asRouterTargetingGetters.profileAgeCreated,
