@@ -4,9 +4,9 @@ Access to certain parts of the messaging system
 
 ## Functions
 
-### `browser.privileged.messagingSystem.getCfrBucketMessages( bucket, cohort )`
+### `browser.privileged.messagingSystem.getCfrProviderMessages( bucket, cohort )`
 
-getCfrBucketMessages
+getCfrProviderMessages
 
 **Parameters**
 

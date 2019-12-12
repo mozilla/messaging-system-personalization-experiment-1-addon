@@ -39,10 +39,10 @@
     ],
     "functions": [
       {
-        "name": "getCfrBucketMessages",
+        "name": "getCfrProviderMessages",
         "type": "function",
         "async": true,
-        "description": "getCfrBucketMessages",
+        "description": "getCfrProviderMessages",
         "parameters": [
           {
             "name": "bucket",

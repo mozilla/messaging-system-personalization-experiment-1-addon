@@ -128,8 +128,8 @@ const onCfrModelsSync = async syncEvent => {
     const { data } = syncEvent;
     console.log({ data });
 
-    console.info("Getting current messages from `cfr-ml-experiments`");
-    const cfrExperimentMessages = await browser.privileged.messagingSystem.getCfrBucketMessages(
+    console.info(`Getting current messages from "${bucket}"`);
+    const cfrExperimentMessages = await browser.privileged.messagingSystem.getCfrProviderMessages(
       bucket,
       cohort,
     );

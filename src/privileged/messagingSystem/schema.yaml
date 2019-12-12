@@ -21,10 +21,10 @@
     testcase: {data: {created: [], current: [], deleted: [], updated: [], }}
 
   functions:
-  - name: getCfrBucketMessages
+  - name: getCfrProviderMessages
     type: function
     async: true
-    description: getCfrBucketMessages
+    description: getCfrProviderMessages
     parameters:
     - name: bucket
       type: string

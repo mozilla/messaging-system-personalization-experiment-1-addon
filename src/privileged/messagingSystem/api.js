@@ -71,8 +71,8 @@ this.messagingSystem = class extends ExtensionAPI {
     return {
       privileged: {
         messagingSystem: {
-          /* getCfrBucketMessages */
-          getCfrBucketMessages: async function getCfrBucketMessages(
+          /* getCfrProviderMessages */
+          getCfrProviderMessages: async function getCfrProviderMessages(
             bucket,
             cohort,
           ) {
