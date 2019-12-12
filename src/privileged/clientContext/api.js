@@ -59,8 +59,6 @@ this.clientContext = class extends ExtensionAPI {
           /* Get number of prefs changed (specifically those in about:preferences) */
           getAboutPreferencesNonDefaultValueCount: async function getAboutPreferencesNonDefaultValueCount() {
             try {
-              console.log("Called getAboutPreferencesNonDefaultValueCount()");
-
               // Note: The list of preferences shown on about:preferences that we check are to the ones
               // that are found as arguments to Preferences.addAll() in mozilla-central/browser/components/preferences
               // hence this copy-paste way of getting that list into this method's code block
@@ -525,24 +523,37 @@ this.clientContext = class extends ExtensionAPI {
               const gDefaultBranch = Services.prefs.getDefaultBranch("");
               const hasDefaultValue = prefName => {
                 const prefType = Services.prefs.getPrefType(prefName);
+                // Non-existing pref values are treated as default values
+                if (prefType === 0) {
+                  return true;
+                }
                 try {
-                  gDefaultBranch[GETTERS_BY_PREF_TYPE[prefType]](prefName);
+                  const getter = GETTERS_BY_PREF_TYPE[prefType];
+                  gDefaultBranch[getter](prefName);
                   return true;
                 } catch (ex) {
-                  return false;
+                  if (ex.name === "NS_ERROR_UNEXPECTED") {
+                    return false;
+                  }
+                  const errorMessage =
+                    "Get default branch value unexpected exception";
+                  console.debug(errorMessage, ex, {
+                    prefName,
+                    prefType,
+                  });
+                  throw new ExtensionError(errorMessage);
                 }
               };
 
               // loop through the prefs listed in about:preferences, and look for non-default values
-              const hasDefaultValueCallback = preference => {
-                return hasDefaultValue(preference.id);
-              };
               const preferencesWithNonDefaultValues = preferencesToCheck.filter(
-                hasDefaultValueCallback,
+                preference => {
+                  return !hasDefaultValue(preference.id);
+                },
               );
 
-              console.log({
-                preferencesToCheck,
+              console.debug({
+                // preferencesToCheck,
                 preferencesWithNonDefaultValues,
               });
 
