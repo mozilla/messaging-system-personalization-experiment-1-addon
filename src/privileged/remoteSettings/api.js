@@ -9,7 +9,11 @@ XPCOMUtils.defineLazyModuleGetters(this, {
   RemoteSettings: "resource://services-settings/remote-settings.js",
 });
 
-const allowListedCollections = ["cfr-ml-control", "cfr-ml-experiments", "cfr-ml-model"];
+const allowListedCollections = [
+  "cfr-ml-control",
+  "cfr-ml-experiments",
+  "cfr-ml-model",
+];
 
 this.remoteSettings = class extends ExtensionAPI {
   getAPI(context) {
