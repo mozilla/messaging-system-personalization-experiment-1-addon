@@ -1,0 +1,14 @@
+- namespace: privileged.addonsMetadata
+  description: addonsMetadata
+
+  functions:
+  - name: getListOfInstalledAddons
+    type: function
+    async: true
+    description: getListOfInstalledAddons
+    parameters: []
+  - name: getListOfInstalledThemes
+    type: function
+    async: true
+    description: getListOfInstalledThemes
+    parameters: []

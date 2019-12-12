@@ -1,3 +1,5 @@
+/* global getClientContext */
+
 const configByAddonId = {
   "messaging-system-personalization-experiment-1-addon-control@mozilla.org": {
     branch: "control",
@@ -117,22 +119,23 @@ const onUnenroll = async reason => {
 
 const computeScores = async cfrMlModelsCollectionRecords => {
   try {
-    console.debug({ cfrMlModelsCollectionRecords });
+    const cfrMlModelsRecordOfInterest = cfrMlModelsCollectionRecords[0];
+    console.debug({ cfrMlModelsRecordOfInterest });
 
     console.info(`Getting current messages from "${bucket}"`);
-    const cfrExperimentMessages = await browser.privileged.messagingSystem.getCfrProviderMessages(
+    const cfrExperimentProviderMessages = await browser.privileged.messagingSystem.getCfrProviderMessages(
       bucket,
       cohort,
     );
-    console.log({ cfrExperimentMessages });
+    const experimentCfrs = cfrExperimentProviderMessages.messages;
+    console.log({ experimentCfrs });
 
-    console.info("Getting model inputs from ASRouterTargeting.jsm");
-    const asRouterTargetingGetters = await browser.privileged.messagingSystem.getASRouterTargetingGetters(
-      ["isFxAEnabled", "usesFirefoxSync", "profileAgeCreated"],
-    );
-    console.log({ asRouterTargetingGetters });
+    console.info(`Getting current client context`);
+    const clientContext = await getClientContext();
 
-    console.info("Computing scores etc - TODO");
+    console.info("Computing scores etc based on the following model input", {
+      clientContext,
+    });
     let computedScores;
     const scoringBehaviorOverride = await browser.privileged.testingOverrides.getScoringBehaviorOverride();
     console.debug({ scoringBehaviorOverride });

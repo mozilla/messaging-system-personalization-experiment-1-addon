@@ -6,6 +6,7 @@ const defaultConfig = {
     browserConsole: true,
     startUrl: [
       "about:debugging#/runtime/this-firefox",
+      "about:config",
       "https://github.com/mozilla/remote-settings-devtools/releases",
     ],
     pref: [
