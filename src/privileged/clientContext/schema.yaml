@@ -1,0 +1,39 @@
+- namespace: privileged.clientContext
+  description: Read and write specific preferences under the `browser.messaging-system.personalized-cfr.*` namespace
+
+  functions:
+  - name: getActiveTicks
+    type: function
+    async: true
+    description: "Get scalar: active_ticks"
+    parameters: []
+  - name: getTotalUriCount
+    type: function
+    async: true
+    description: "Get scalar: total_uri_count"
+    parameters: []
+  - name: getAboutPreferencesNonDefaultValueCount
+    type: function
+    async: true
+    description: "Get number of prefs changed (specifically those in about:preferences)"
+    parameters: []
+  - name: getFxAConfigured
+    type: function
+    async: true
+    description: "Get whether or not Firefox accounts are configured"
+    parameters: []
+  - name: getDarkModeActive
+    type: function
+    async: true
+    description: "Get if dark mode is active or not"
+    parameters: []
+  - name: getLoginsSavedInBrowserCount
+    type: function
+    async: true
+    description: "Get count of logins saved in the browser"
+    parameters: []
+  - name: getMainMonitorScreenWidth
+    type: function
+    async: true
+    description: "Get main monitor screen width"
+    parameters: []

@@ -12,6 +12,22 @@
   },
 
   "experiment_apis": {
+    "addonsMetadata": {
+      "schema": "./privileged/addonsMetadata/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./privileged/addonsMetadata/api.js",
+        "paths": [["privileged", "addonsMetadata"]]
+      }
+    },
+    "clientContext": {
+      "schema": "./privileged/clientContext/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./privileged/clientContext/api.js",
+        "paths": [["privileged", "clientContext"]]
+      }
+    },
     "messagingSystem": {
       "schema": "./privileged/messagingSystem/schema.json",
       "parent": {
@@ -47,7 +63,7 @@
   },
 
   "background": {
-    "scripts": ["background.js"]
+    "scripts": ["clientContext.js", "background.js"]
   },
 
   "permissions": ["normandyAddonStudy", "storage", "alarms"]

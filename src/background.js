@@ -1,3 +1,5 @@
+/* global getClientContext */
+
 const configByAddonId = {
   "messaging-system-personalization-experiment-1-addon-control@mozilla.org": {
     branch: "control",
@@ -126,13 +128,12 @@ const computeScores = async cfrMlModelsCollectionRecords => {
     );
     console.log({ cfrExperimentMessages });
 
-    console.info("Getting model inputs from ASRouterTargeting.jsm");
-    const asRouterTargetingGetters = await browser.privileged.messagingSystem.getASRouterTargetingGetters(
-      ["isFxAEnabled", "usesFirefoxSync", "profileAgeCreated"],
-    );
-    console.log({ asRouterTargetingGetters });
+    console.info(`Getting current client context`);
+    const clientContext = await getClientContext();
 
-    console.info("Computing scores etc - TODO");
+    console.info("Computing scores etc based on the following model input", {
+      clientContext,
+    });
     let computedScores;
     const scoringBehaviorOverride = await browser.privileged.testingOverrides.getScoringBehaviorOverride();
     console.debug({ scoringBehaviorOverride });
