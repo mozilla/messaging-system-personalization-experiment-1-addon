@@ -50,7 +50,7 @@
     "eslint-plugin-mozilla": "^0.4.4",
     "eslint-plugin-no-unsanitized": "^2.0.1",
     "eslint-plugin-prettier": "^3.1.1",
-    "npm-run-all": "^4.1.3",
+    "npm-run-all": "^4.1.5",
     "prettier": "^1.10.2",
     "web-ext": "^2.6.0",
     "webext-experiment-utils": "mozilla/webext-experiment-utils#0.2.0",
@@ -63,6 +63,7 @@
   },
   "resolutions": {
     "lodash": ">=4.17.11",
+    "https-proxy-agent": "^2.2.3",
     "set-value": ">=2.0.1 <3.0.0 || >=3.0.1",
     "mixin-deep": ">=1.3.2 <2.0.0 || >=2.0.1"
   }
