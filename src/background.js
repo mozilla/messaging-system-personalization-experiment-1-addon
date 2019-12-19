@@ -144,44 +144,45 @@ const computeScores = async cfrMlModelsCollectionRecords => {
     const experimentCfrs = cfrExperimentProviderMessages.messages;
     console.log({ experimentCfrs });
 
+    const experimentCfrIds = experimentCfrs.map(
+      experimentCfr => experimentCfr.id,
+    );
+    console.log({ experimentCfrIds });
+
     console.info(`Getting current client context`);
     const clientContext = await getClientContext();
 
     console.info("Computing scores etc based on the following model input", {
       clientContext,
     });
-    let computedScores;
+    const computedScores = {};
     const scoringBehaviorOverride = await browser.privileged.testingOverrides.getScoringBehaviorOverride();
     console.debug({ scoringBehaviorOverride });
-    switch (scoringBehaviorOverride) {
-      case "fixed_value_0":
-        computedScores = {
-          PERSONALIZED_CFR_MESSAGE: 0,
-        };
-        break;
-      case "fixed_value_10000":
-        computedScores = {
-          PERSONALIZED_CFR_MESSAGE: 10000,
-        };
-        break;
-      case "fixed_value_slightly_below_threshold":
-        computedScores = {
-          PERSONALIZED_CFR_MESSAGE: config.scoreThreshold - 1,
-        };
-        break;
-      case "fixed_value_slightly_over_threshold":
-        computedScores = {
-          PERSONALIZED_CFR_MESSAGE: config.scoreThreshold + 1,
-        };
-        break;
-      case "random_between_1_and_9999":
-        computedScores = {
-          PERSONALIZED_CFR_MESSAGE: Math.round(Math.random() * 9998 + 1),
-        };
-        break;
-      default:
-        computedScores = {};
+
+    if (scoringBehaviorOverride) {
+      experimentCfrIds.push("PERSONALIZED_CFR_MESSAGE");
     }
+
+    const computeScore = cfrId => {
+      switch (scoringBehaviorOverride) {
+        case "fixed_value_0":
+          return 0;
+        case "fixed_value_10000":
+          return 10000;
+        case "fixed_value_slightly_below_threshold":
+          return config.scoreThreshold - 1;
+        case "fixed_value_slightly_over_threshold":
+          return config.scoreThreshold + 1;
+        case "random_between_1_and_9999":
+          return Math.round(Math.random() * 9998 + 1);
+      }
+
+      return -1;
+    };
+
+    experimentCfrIds.map(cfrId => {
+      computedScores[cfrId] = computeScore(cfrId);
+    });
 
     console.info("Writing computed scores into prefs");
     await browser.privileged.personalizedCfrPrefs.setScores(computedScores);
