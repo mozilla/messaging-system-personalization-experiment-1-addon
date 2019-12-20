@@ -30,6 +30,13 @@ const onError = e => {
 
 const run = async () => {
   try {
+    if (!isEligible()) {
+      console.info("Not eligible");
+      browser.normandyAddonStudy.endStudy("Not eligible");
+    } else {
+      console.info("Eligible");
+    }
+
     // TODO - double-check that study has not already ended
     const study = await browser.normandyAddonStudy.getStudy();
     console.debug({ study });
@@ -45,6 +52,13 @@ const run = async () => {
   } catch (e) {
     onError(e);
   }
+};
+
+const isEligible = async () => {
+  console.info("Checking study eligibility");
+  const permanentPrivateBrowsing = await browser.privileged.privacyContext.permanentPrivateBrowsing();
+  console.debug({ permanentPrivateBrowsing });
+  return !permanentPrivateBrowsing;
 };
 
 const firstRun = async () => {

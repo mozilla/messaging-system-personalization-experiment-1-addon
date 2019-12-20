@@ -36,6 +36,14 @@
         "paths": [["privileged", "messagingSystem"]]
       }
     },
+    "privacyContext": {
+      "schema": "./privileged/privacyContext/schema.json",
+      "parent": {
+        "scopes": ["addon_parent"],
+        "script": "./privileged/privacyContext/api.js",
+        "paths": [["privileged", "privacyContext"]]
+      }
+    },
     "personalizedCfrPrefs": {
       "schema": "./privileged/personalizedCfrPrefs/schema.json",
       "parent": {
