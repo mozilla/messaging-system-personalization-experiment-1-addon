@@ -1,4 +1,4 @@
-/* global getClientContext */
+/* global getClientContext, BernoulliNB */
 
 const configByAddonId = {
   "messaging-system-personalization-experiment-1-addon-control@mozilla.org": {
@@ -132,21 +132,26 @@ const onUnenroll = async reason => {
 };
 
 const computeScores = async cfrMlModelsCollectionRecords => {
+  /**
+   * @typedef {Object} Classifier
+   * @property {float[]} priors Priors
+   * @property {float[][]} delProbs Delta probs
+   * @property {float[][]} negProbs Neg probs
+   */
+  /**
+   * @typedef {Object} CfrMlModelsRecord
+   * @property {string} version Model version
+   * @property {Object.<string, Classifier>} models_by_cfr_id Models by CFR id
+   */
+
   try {
-    const cfrMlModelsRecordOfInterest = cfrMlModelsCollectionRecords[0];
-    console.debug({ cfrMlModelsRecordOfInterest });
+    /**
+     * @type CfrMlModelsRecord
+     */
+    const cfrMlModelsRecord = cfrMlModelsCollectionRecords[0];
+    console.debug({ cfrMlModelsRecord });
 
-    console.info(`Getting current messages from "${bucket}"`);
-    const cfrExperimentProviderMessages = await browser.privileged.messagingSystem.getCfrProviderMessages(
-      bucket,
-      cohort,
-    );
-    const experimentCfrs = cfrExperimentProviderMessages.messages;
-    console.log({ experimentCfrs });
-
-    const experimentCfrIds = experimentCfrs.map(
-      experimentCfr => experimentCfr.id,
-    );
+    const experimentCfrIds = Object.keys(cfrMlModelsRecord.models_by_cfr_id);
     console.log({ experimentCfrIds });
 
     console.info(`Getting current client context`);
@@ -163,6 +168,29 @@ const computeScores = async cfrMlModelsCollectionRecords => {
       experimentCfrIds.push("PERSONALIZED_CFR_MESSAGE");
     }
 
+    const featureNames = [
+      "has_firefox_as_default_browser", // index 0
+      "has_more_than_five_days_of_active_ticks", // index 1
+      "has_more_than_1000_total_uri_count", // index 2
+      "about_preferences_non_default_value_count", // index 3
+      "has_at_least_one_self_installed_addon", // index 4
+      "has_at_least_one_self_installed_popular_privacy_security_addon", // index 5
+      "has_at_least_one_self_installed_theme", // index 6
+      "dark_mode_active", // index 7
+      "has_more_than_5_bookmarks", // index 8
+      "has_at_least_one_login_saved_in_the_browser", // index 9
+      "firefox_accounts_configured", // index 10
+      "profile_at_least_7_days_old", // index 11
+      "main_monitor_screen_width_gt_2000", // index 12
+      "is_release_channel", // index 13
+      "locale_is_en_us", // index 14
+      "locale_is_de", // index 15
+    ];
+
+    const features = featureNames.map(feature => clientContext[feature]);
+
+    console.log({ features });
+
     const computeScore = cfrId => {
       switch (scoringBehaviorOverride) {
         case "fixed_value_0":
@@ -177,6 +205,21 @@ const computeScores = async cfrMlModelsCollectionRecords => {
           return Math.round(Math.random() * 9998 + 1);
       }
 
+      const model = cfrMlModelsRecord.models_by_cfr_id[cfrId];
+
+      console.log("TODO compute score", { cfrId, model, clientContext });
+
+      // Return -1 if no model exists for the given CFR id
+      if (model === undefined) {
+        return -1;
+      }
+
+      const { priors, negProbs, delProbs } = model;
+
+      const clf = new BernoulliNB(priors, negProbs, delProbs);
+      const prediction = clf.predict(features);
+      console.log({ prediction });
+
       return -1;
     };
 
@@ -187,7 +230,7 @@ const computeScores = async cfrMlModelsCollectionRecords => {
     console.info("Writing computed scores into prefs");
     await browser.privileged.personalizedCfrPrefs.setScores(computedScores);
 
-    const personalizedModelVersion = -1;
+    const personalizedModelVersion = cfrMlModelsRecord.version;
 
     console.info("Sanity checking written prefs");
     const scoreThreshold = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
