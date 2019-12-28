@@ -28,9 +28,9 @@ Get whether or not Firefox accounts are configured
 
 **Parameters**
 
-### `browser.privileged.clientContext.getDarkModeActive( )`
+### `browser.privileged.clientContext.getCurrentTheme( )`
 
-Get if dark mode is active or not
+Get the currently active theme
 
 **Parameters**
 

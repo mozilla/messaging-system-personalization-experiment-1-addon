@@ -585,9 +585,9 @@ this.clientContext = class extends ExtensionAPI {
           },
 
           /* Get if dark mode is active or not */
-          getDarkModeActive: async function getDarkModeActive() {
+          getCurrentTheme: async function getCurrentTheme() {
             try {
-              return Services.prefs.getBoolPref(`browser.in-content.dark-mode`);
+              return Services.prefs.getStringPref(`extensions.activeThemeID`);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);

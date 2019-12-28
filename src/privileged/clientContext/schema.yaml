@@ -22,10 +22,10 @@
     async: true
     description: "Get whether or not Firefox accounts are configured"
     parameters: []
-  - name: getDarkModeActive
+  - name: getCurrentTheme
     type: function
     async: true
-    description: "Get if dark mode is active or not"
+    description: "Get the currently active theme"
     parameters: []
   - name: getLoginsSavedInBrowserCount
     type: function

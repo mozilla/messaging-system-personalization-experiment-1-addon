@@ -238,7 +238,9 @@ const getClientContext = async () => {
       listOfSelfInstalledEnabledPopularPrivacySecurityAddons.length > 0,
     has_at_least_one_self_installed_theme:
       listOfSelfInstalledEnabledThemes.length > 0,
-    dark_mode_active: await browser.privileged.clientContext.getDarkModeActive(),
+    dark_mode_active:
+      (await browser.privileged.clientContext.getCurrentTheme()) ===
+      "firefox-compact-dark@mozilla.org",
     total_bookmarks_count: asRouterTargetingGetters.totalBookmarksCount,
     has_at_least_one_login_saved_in_the_browser:
       (await browser.privileged.clientContext.getLoginsSavedInBrowserCount()) >
