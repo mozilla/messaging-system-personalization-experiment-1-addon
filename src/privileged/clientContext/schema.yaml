@@ -37,3 +37,8 @@
     async: true
     description: "Get main monitor screen width"
     parameters: []
+  - name: getUpdateChannel
+    type: function
+    async: true
+    description: "Get the current Firefox update channel"
+    parameters: []

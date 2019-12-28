@@ -46,6 +46,12 @@ Get main monitor screen width
 
 **Parameters**
 
+### `browser.privileged.clientContext.getUpdateChannel( )`
+
+Get the current Firefox update channel
+
+**Parameters**
+
 ## Events
 
 (None)

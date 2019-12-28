@@ -168,18 +168,49 @@ const computeScores = async cfrMlModelsCollectionRecords => {
       experimentCfrIds.push("PERSONALIZED_CFR_MESSAGE");
     }
 
-    const featureNames = [
+    const booleanFeatures = {
+      has_firefox_as_default_browser:
+        clientContext.has_firefox_as_default_browser,
+      has_more_than_five_days_of_active_ticks:
+        clientContext.active_ticks > 60 * 24 * 5,
+      has_more_than_1000_total_uri_count: clientContext.total_uri_count > 1000,
+      has_more_than_1_about_preferences_non_default_value_count:
+        clientContext.about_preferences_non_default_value_count > 1,
+      has_at_least_one_self_installed_addon:
+        clientContext.self_installed_addons_count > 0,
+      has_at_least_one_self_installed_popular_privacy_security_addon:
+        clientContext.self_installed_popular_privacy_security_addons_count > 0,
+      has_at_least_one_self_installed_theme:
+        clientContext.self_installed_themes_count > 0,
+      dark_mode_active: clientContext.dark_mode_active,
+      has_more_than_5_bookmarks: clientContext.total_bookmarks_count > 5,
+      has_at_least_one_login_saved_in_the_browser:
+        clientContext.logins_saved_in_the_browser_count >= 1,
+      firefox_account_prefs_configured:
+        clientContext.firefox_account_prefs_configured,
+      profile_at_least_7_days_old:
+        clientContext.profile_age > 1000 * 60 * 60 * 24 * 7,
+      main_monitor_screen_width_gt_2000:
+        clientContext.main_monitor_screen_width > 2000,
+      is_release_channel: clientContext.update_channel === "release",
+      locale_is_en_us: clientContext.locale === "en-US",
+      locale_is_de: clientContext.locale === "de",
+    };
+
+    console.log({ booleanFeatures });
+
+    const orderOfFeatures = [
       "has_firefox_as_default_browser", // index 0
       "has_more_than_five_days_of_active_ticks", // index 1
       "has_more_than_1000_total_uri_count", // index 2
-      "about_preferences_non_default_value_count", // index 3
+      "has_more_than_1_about_preferences_non_default_value_count", // index 3
       "has_at_least_one_self_installed_addon", // index 4
       "has_at_least_one_self_installed_popular_privacy_security_addon", // index 5
       "has_at_least_one_self_installed_theme", // index 6
       "dark_mode_active", // index 7
       "has_more_than_5_bookmarks", // index 8
       "has_at_least_one_login_saved_in_the_browser", // index 9
-      "firefox_accounts_configured", // index 10
+      "firefox_account_prefs_configured", // index 10
       "profile_at_least_7_days_old", // index 11
       "main_monitor_screen_width_gt_2000", // index 12
       "is_release_channel", // index 13
@@ -187,7 +218,12 @@ const computeScores = async cfrMlModelsCollectionRecords => {
       "locale_is_de", // index 15
     ];
 
-    const features = featureNames.map(feature => clientContext[feature]);
+    const features = orderOfFeatures.map(key => {
+      if (booleanFeatures[key] === undefined) {
+        throw new Error(`Feature ${key} is undefined`);
+      }
+      return booleanFeatures[key];
+    });
 
     console.log({ features });
 
