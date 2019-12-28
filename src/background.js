@@ -207,19 +207,13 @@ const computeScores = async cfrMlModelsCollectionRecords => {
 
       const model = cfrMlModelsRecord.models_by_cfr_id[cfrId];
 
-      console.log("TODO compute score", { cfrId, model, clientContext });
-
-      // Return -1 if no model exists for the given CFR id
-      if (model === undefined) {
-        return -1;
-      }
-
       const { priors, negProbs, delProbs } = model;
 
       const clf = new BernoulliNB(priors, negProbs, delProbs);
-      const prediction = clf.predict(features);
-      console.log({ prediction });
+      const jll = clf._joint_log_likelihood(features);
+      console.debug("Computed jll", { cfrId, model, clf, jll });
 
+      // TODO: Correct translation to a 0-10k score
       return -1;
     };
 

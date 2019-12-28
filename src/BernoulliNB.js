@@ -13,10 +13,10 @@ const BernoulliNB = function(priors, negProbs, delProbs) {
   this.negProbs = negProbs;
   this.delProbs = delProbs;
 
-  this.predict = function(features) {
-    const nClasses = this.priors.length,
-      nFeatures = this.delProbs.length;
+  const nClasses = this.priors.length,
+    nFeatures = this.delProbs.length;
 
+  this._joint_log_likelihood = function(features) {
     const jll = new Array(nClasses);
     for (let i = 0; i < nClasses; i++) {
       let sum = 0;
@@ -32,6 +32,11 @@ const BernoulliNB = function(priors, negProbs, delProbs) {
       }
       jll[i] += this.priors[i] + sum;
     }
+    return jll;
+  };
+
+  this.predict = function(features) {
+    const jll = this._joint_log_likelihood(features);
     let classIdx = 0;
 
     for (let i = 0; i < nClasses; i++) {
