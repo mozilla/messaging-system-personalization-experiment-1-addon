@@ -91,7 +91,9 @@ const everyRun = async () => {
     // Drives update cycle so that the computations gets updated on each update
     const alarmListener = async alarm => {
       if (alarm.name === periodicAlarmName) {
-        console.info(`Force syncing "cfr-ml-model" bucket contents`);
+        console.info(
+          `Fetching "cfr-ml-model" bucket contents directly from the remote settings server endpoint`,
+        );
         // Imports models from remote settings (`cfr-ml-model` bucket)
         const cfrMlModelsCollectionRecords = await browser.privileged.remoteSettings.fetchFromEndpointDirectly(
           "cfr-ml-model",
