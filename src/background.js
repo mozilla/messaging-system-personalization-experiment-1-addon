@@ -222,7 +222,9 @@ const computeScores = async cfrMlModelsCollectionRecords => {
       if (booleanFeatures[key] === undefined) {
         throw new Error(`Feature ${key} is undefined`);
       }
-      return booleanFeatures[key];
+      // Return 1 for true and 0 for false, to correspond
+      // to the class values used during training
+      return Number(booleanFeatures[key]);
     });
 
     console.log({ features });
