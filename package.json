@@ -60,7 +60,7 @@
     "rimraf": "^2.6.3",
     "safe-es6-template": "^1.0.1",
     "web-ext": "^2.6.0",
-    "webext-experiment-utils": "mozilla/webext-experiment-utils#0.2.0",
+    "webext-experiment-utils": "github:mozilla/webext-experiment-utils#v0.2.0",
     "yamljs": "^0.3.0"
   },
   "dependencies": {

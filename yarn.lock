@@ -6149,7 +6149,7 @@ web-ext@^2.6.0:
     yargs "6.6.0"
     zip-dir "1.0.2"
 
-webext-experiment-utils@mozilla/webext-experiment-utils#0.2.0:
+"webext-experiment-utils@github:mozilla/webext-experiment-utils#v0.2.0":
   version "0.2.0"
   resolved "https://codeload.github.com/mozilla/webext-experiment-utils/tar.gz/31b6e71314934caf14fe541cd2c045957f1eb4ad"
   dependencies:
