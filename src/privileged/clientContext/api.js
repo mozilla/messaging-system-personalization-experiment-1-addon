@@ -23,6 +23,10 @@ this.clientContext = class extends ExtensionAPI {
       "resource://gre/modules/TelemetryEnvironment.jsm",
       {},
     );
+    const { UpdateUtils } = ChromeUtils.import(
+      "resource://gre/modules/UpdateUtils.jsm",
+      {},
+    );
 
     // Based on https://dxr.mozilla.org/mozilla-central/source/browser/components/aboutconfig/content/aboutconfig.js#106-111
     const GETTERS_BY_PREF_TYPE = {
@@ -585,9 +589,9 @@ this.clientContext = class extends ExtensionAPI {
           },
 
           /* Get if dark mode is active or not */
-          getDarkModeActive: async function getDarkModeActive() {
+          getCurrentTheme: async function getCurrentTheme() {
             try {
-              return Services.prefs.getBoolPref(`browser.in-content.dark-mode`);
+              return Services.prefs.getStringPref(`extensions.activeThemeID`);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
@@ -614,6 +618,17 @@ this.clientContext = class extends ExtensionAPI {
               return environment.system.gfx.monitors[0]
                 ? environment.system.gfx.monitors[0].screenWidth
                 : undefined;
+            } catch (error) {
+              // Surface otherwise silent or obscurely reported errors
+              console.error(error.message, error.stack);
+              throw new ExtensionError(error.message);
+            }
+          },
+
+          /* Get the current Firefox update channel */
+          getUpdateChannel: async function getUpdateChannel() {
+            try {
+              return UpdateUtils.getUpdateChannel(true);
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);

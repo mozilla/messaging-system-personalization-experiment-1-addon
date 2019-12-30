@@ -232,18 +232,17 @@ const getClientContext = async () => {
     active_ticks: await browser.privileged.clientContext.getActiveTicks(),
     total_uri_count: await browser.privileged.clientContext.getTotalUriCount(),
     about_preferences_non_default_value_count: await browser.privileged.clientContext.getAboutPreferencesNonDefaultValueCount(),
-    has_at_least_one_self_installed_addon:
-      listOfSelfInstalledEnabledAddons.length > 0,
-    has_at_least_one_self_installed_popular_privacy_security_addon:
-      listOfSelfInstalledEnabledPopularPrivacySecurityAddons.length > 0,
-    has_at_least_one_self_installed_theme:
-      listOfSelfInstalledEnabledThemes.length > 0,
-    dark_mode_active: await browser.privileged.clientContext.getDarkModeActive(),
+    self_installed_addons_count: listOfSelfInstalledEnabledAddons.length,
+    self_installed_popular_privacy_security_addons_count:
+      listOfSelfInstalledEnabledPopularPrivacySecurityAddons.length,
+    self_installed_themes_count: listOfSelfInstalledEnabledThemes.length,
+    dark_mode_active:
+      (await browser.privileged.clientContext.getCurrentTheme()) ===
+      "firefox-compact-dark@mozilla.org",
     total_bookmarks_count: asRouterTargetingGetters.totalBookmarksCount,
-    has_at_least_one_login_saved_in_the_browser:
-      (await browser.privileged.clientContext.getLoginsSavedInBrowserCount()) >
-      0,
-    firefox_accounts_configured: await browser.privileged.clientContext.getFxAConfigured(),
+    logins_saved_in_the_browser_count: await browser.privileged.clientContext.getLoginsSavedInBrowserCount(),
+    firefox_account_prefs_configured: await browser.privileged.clientContext.getFxAConfigured(),
+    update_channel: await browser.privileged.clientContext.getUpdateChannel(),
     locale: asRouterTargetingGetters.locale,
     profile_age: Date.now() - asRouterTargetingGetters.profileAgeCreated,
     main_monitor_screen_width: await browser.privileged.clientContext.getMainMonitorScreenWidth(),

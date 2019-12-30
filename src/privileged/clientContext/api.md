@@ -28,9 +28,9 @@ Get whether or not Firefox accounts are configured
 
 **Parameters**
 
-### `browser.privileged.clientContext.getDarkModeActive( )`
+### `browser.privileged.clientContext.getCurrentTheme( )`
 
-Get if dark mode is active or not
+Get the currently active theme
 
 **Parameters**
 
@@ -43,6 +43,12 @@ Get count of logins saved in the browser
 ### `browser.privileged.clientContext.getMainMonitorScreenWidth( )`
 
 Get main monitor screen width
+
+**Parameters**
+
+### `browser.privileged.clientContext.getUpdateChannel( )`
+
+Get the current Firefox update channel
 
 **Parameters**
 
