@@ -6,7 +6,7 @@ Access to certain parts of the messaging system
 
 ### `browser.privileged.messagingSystem.getCfrProviderMessages( bucket, cohort )`
 
-getCfrProviderMessages
+getCfrProviderMessages (Note: Currently unused in the add-on. Can be utilized for validation / sanity checks within the add-on)
 
 **Parameters**
 

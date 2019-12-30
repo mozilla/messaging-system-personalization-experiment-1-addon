@@ -555,10 +555,12 @@ this.clientContext = class extends ExtensionAPI {
                 },
               );
 
+              /* Uncomment to check what preferences have non-default values in this profile
               console.debug({
                 // preferencesToCheck,
                 preferencesWithNonDefaultValues,
               });
+              */
 
               return preferencesWithNonDefaultValues.length;
             } catch (error) {
@@ -577,9 +579,11 @@ this.clientContext = class extends ExtensionAPI {
               ].filter(fxaPreference => {
                 return !hasDefaultValue(fxaPreference);
               });
+              /* Uncomment to check which of the above fxa-related preferences have non-default values in this profile
               console.debug({
                 fxaPreferencesWithNonDefaultValues,
               });
+              */
               return fxaPreferencesWithNonDefaultValues.length > 0;
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors

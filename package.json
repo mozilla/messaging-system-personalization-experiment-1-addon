@@ -65,8 +65,7 @@
     "webext-experiment-utils": "github:mozilla/webext-experiment-utils#v0.2.0",
     "yamljs": "^0.3.0"
   },
-  "dependencies": {
-  },
+  "dependencies": {},
   "resolutions": {
     "lodash": ">=4.17.11",
     "https-proxy-agent": "^2.2.3",

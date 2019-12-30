@@ -24,7 +24,7 @@
   - name: getCfrProviderMessages
     type: function
     async: true
-    description: getCfrProviderMessages
+    description: "getCfrProviderMessages (Note: Currently unused in the add-on. Can be utilized for validation / sanity checks within the add-on)"
     parameters:
     - name: bucket
       type: string
