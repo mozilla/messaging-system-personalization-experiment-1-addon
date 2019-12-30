@@ -34,14 +34,34 @@ const uploadEvaluatedFeatures = async (
     features,
   });
 
-  const payload = {
+  /**
+   * A experiment-telemetry-specific version of TelemetryFeed.applyCFRPolicy
+   * Permalink of the origin code at the time of authoring this shorter version:
+   * https://dxr.mozilla.org/mozilla-central/rev/7c47e27e43c19a724a1353197f89a51298cad2fd/browser/components/newtab/lib/TelemetryFeed.jsm#596-614
+   *
+   * Note that since the experiment places the profile in a CFR cohort,
+   * client id will always be added, and impression_id will never be set.
+   */
+  const applyCFRPolicy = async payload => {
+    let addClientId;
+    const isInCFRCohort = true; // Always true in this experiment
+    if (clientContext.update_channel === "release" && !isInCFRCohort) {
+      addClientId = false;
+      payload.impression_id = await browser.privileged.messagingSystem.getOrCreateImpressionId();
+    } else {
+      addClientId = true;
+    }
+    return { addClientId, payload };
+  };
+
+  const { addClientId, payload } = await applyCFRPolicy({
     model_version: personalizedModelVersion,
     study_variation: browser.runtime.id,
     study_addon_version: browser.runtime.getManifest().version,
     client_context_features: clientContext,
     boolean_client_context_features: booleanFeatures,
     features_array_used_in_score_computation: features,
-  };
+  });
 
   console.debug(
     "Telemetry about to be validated using the compiled ajv validate() function:",
@@ -58,7 +78,7 @@ const uploadEvaluatedFeatures = async (
   const type = telemetryTopic;
   const message = payload;
   const options = {
-    addClientId: false,
+    addClientId,
     addEnvironment: false,
   };
   await browser.telemetry.submitPing(type, message, options);

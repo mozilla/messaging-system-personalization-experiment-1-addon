@@ -10,6 +10,9 @@
     "study_addon_version": {
       "type": "string"
     },
+    "impression_id": {
+      "type": "string"
+    },
     "client_context_features": {
       "type": "object",
       "properties": {
