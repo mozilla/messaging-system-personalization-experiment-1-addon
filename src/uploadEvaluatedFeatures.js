@@ -38,6 +38,9 @@ const uploadEvaluatedFeatures = async (
     model_version: personalizedModelVersion,
     study_variation: browser.runtime.id,
     study_addon_version: browser.runtime.getManifest().version,
+    client_context_features: clientContext,
+    boolean_client_context_features: booleanFeatures,
+    features_array_used_in_score_computation: features,
   };
 
   console.debug(
