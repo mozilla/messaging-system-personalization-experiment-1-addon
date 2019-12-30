@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "properties": {
+    "model_version": {
+      "type": "number"
+    },
+    "study_variation": {
+      "type": "string"
+    },
+    "study_addon_version": {
+      "type": "string"
+    }
+  },
+  "required": ["model_version", "study_variation", "study_addon_version"]
+}

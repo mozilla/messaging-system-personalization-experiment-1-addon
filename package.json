@@ -11,6 +11,7 @@
   "scripts": {
     "start:control": "npm run build && web-ext run -s dist/extension-control-$npm_package_version",
     "start:treatment": "npm run build && web-ext run -s dist/extension-treatment-$npm_package_version",
+    "prebuild": "ajv compile -s schemas/messaging-system-personalization-experiment-1-update.payload.schema.json -o /tmp/validate.js && (cat /tmp/validate.js | grep -v 'module.exports = validate;' > src/validate.js)",
     "build": "node build.js",
     "clean": "rimraf dist web-ext-artifacts",
     "lint": "eslint . --ext jsm,js,json",
@@ -48,6 +49,7 @@
     "generate:verifyWeeSchema:testingOverrides": "cd src/privileged/testingOverrides && verifyWeeSchema schema.json"
   },
   "devDependencies": {
+    "ajv-cli": "^3.0.0",
     "eslint": "^6.7.2",
     "eslint-config-prettier": "^6.7.0",
     "eslint-plugin-json": "^1.2.0",
