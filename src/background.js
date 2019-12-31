@@ -173,9 +173,8 @@ const computeScores = async cfrMlModelsCollectionRecords => {
     const booleanFeatures = {
       has_firefox_as_default_browser:
         clientContext.has_firefox_as_default_browser,
-      has_more_than_five_days_of_active_ticks:
-        clientContext.active_ticks > 60 * 24 * 5,
-      has_more_than_1000_total_uri_count: clientContext.total_uri_count > 1000,
+      has_more_than_12_active_ticks: clientContext.active_ticks > 12,
+      has_more_than_5_total_uri_count: clientContext.total_uri_count > 5,
       has_more_than_1_about_preferences_non_default_value_count:
         clientContext.about_preferences_non_default_value_count > 1,
       has_at_least_one_self_installed_addon:
@@ -190,8 +189,8 @@ const computeScores = async cfrMlModelsCollectionRecords => {
         clientContext.logins_saved_in_the_browser_count >= 1,
       firefox_account_prefs_configured:
         clientContext.firefox_account_prefs_configured,
-      profile_at_least_7_days_old:
-        clientContext.profile_age > 1000 * 60 * 60 * 24 * 7,
+      profile_more_than_60_days_old:
+        clientContext.profile_age_in_ms > 1000 * 60 * 60 * 24 * 60,
       main_monitor_screen_width_gt_2000:
         clientContext.main_monitor_screen_width > 2000,
       is_release_channel: clientContext.update_channel === "release",
@@ -203,8 +202,8 @@ const computeScores = async cfrMlModelsCollectionRecords => {
 
     const orderOfFeatures = [
       "has_firefox_as_default_browser", // index 0
-      "has_more_than_five_days_of_active_ticks", // index 1
-      "has_more_than_1000_total_uri_count", // index 2
+      "has_more_than_12_active_ticks", // index 1
+      "has_more_than_5_total_uri_count", // index 2
       "has_more_than_1_about_preferences_non_default_value_count", // index 3
       "has_at_least_one_self_installed_addon", // index 4
       "has_at_least_one_self_installed_popular_privacy_security_addon", // index 5
@@ -213,7 +212,7 @@ const computeScores = async cfrMlModelsCollectionRecords => {
       "has_more_than_5_bookmarks", // index 8
       "has_at_least_one_login_saved_in_the_browser", // index 9
       "firefox_account_prefs_configured", // index 10
-      "profile_at_least_7_days_old", // index 11
+      "profile_more_than_60_days_old", // index 11
       "main_monitor_screen_width_gt_2000", // index 12
       "is_release_channel", // index 13
       "locale_is_en_us", // index 14

@@ -453,25 +453,25 @@ var validate = (function() {
                                             var valid2 = errors === errs_2;
                                           }
                                           if (valid2) {
-                                            if (data1.profile_age === undefined) {
+                                            if (data1.profile_age_in_ms === undefined) {
                                               valid2 = false;
                                               validate.errors = [{
                                                 keyword: 'required',
                                                 dataPath: (dataPath || '') + '.client_context_features',
                                                 schemaPath: '#/properties/client_context_features/required',
                                                 params: {
-                                                  missingProperty: 'profile_age'
+                                                  missingProperty: 'profile_age_in_ms'
                                                 },
-                                                message: 'should have required property \'profile_age\''
+                                                message: 'should have required property \'profile_age_in_ms\''
                                               }];
                                               return false;
                                             } else {
                                               var errs_2 = errors;
-                                              if (typeof data1.profile_age !== "number") {
+                                              if (typeof data1.profile_age_in_ms !== "number") {
                                                 validate.errors = [{
                                                   keyword: 'type',
-                                                  dataPath: (dataPath || '') + '.client_context_features.profile_age',
-                                                  schemaPath: '#/properties/client_context_features/properties/profile_age/type',
+                                                  dataPath: (dataPath || '') + '.client_context_features.profile_age_in_ms',
+                                                  schemaPath: '#/properties/client_context_features/properties/profile_age_in_ms/type',
                                                   params: {
                                                     type: 'number'
                                                   },
@@ -646,25 +646,25 @@ var validate = (function() {
                           var valid2 = errors === errs_2;
                         }
                         if (valid2) {
-                          if (data1.has_more_than_five_days_of_active_ticks === undefined) {
+                          if (data1.has_more_than_12_active_ticks === undefined) {
                             valid2 = false;
                             validate.errors = [{
                               keyword: 'required',
                               dataPath: (dataPath || '') + '.boolean_client_context_features',
                               schemaPath: '#/properties/boolean_client_context_features/required',
                               params: {
-                                missingProperty: 'has_more_than_five_days_of_active_ticks'
+                                missingProperty: 'has_more_than_12_active_ticks'
                               },
-                              message: 'should have required property \'has_more_than_five_days_of_active_ticks\''
+                              message: 'should have required property \'has_more_than_12_active_ticks\''
                             }];
                             return false;
                           } else {
                             var errs_2 = errors;
-                            if (typeof data1.has_more_than_five_days_of_active_ticks !== "boolean") {
+                            if (typeof data1.has_more_than_12_active_ticks !== "boolean") {
                               validate.errors = [{
                                 keyword: 'type',
-                                dataPath: (dataPath || '') + '.boolean_client_context_features.has_more_than_five_days_of_active_ticks',
-                                schemaPath: '#/properties/boolean_client_context_features/properties/has_more_than_five_days_of_active_ticks/type',
+                                dataPath: (dataPath || '') + '.boolean_client_context_features.has_more_than_12_active_ticks',
+                                schemaPath: '#/properties/boolean_client_context_features/properties/has_more_than_12_active_ticks/type',
                                 params: {
                                   type: 'boolean'
                                 },
@@ -675,25 +675,25 @@ var validate = (function() {
                             var valid2 = errors === errs_2;
                           }
                           if (valid2) {
-                            if (data1.has_more_than_1000_total_uri_count === undefined) {
+                            if (data1.has_more_than_5_total_uri_count === undefined) {
                               valid2 = false;
                               validate.errors = [{
                                 keyword: 'required',
                                 dataPath: (dataPath || '') + '.boolean_client_context_features',
                                 schemaPath: '#/properties/boolean_client_context_features/required',
                                 params: {
-                                  missingProperty: 'has_more_than_1000_total_uri_count'
+                                  missingProperty: 'has_more_than_5_total_uri_count'
                                 },
-                                message: 'should have required property \'has_more_than_1000_total_uri_count\''
+                                message: 'should have required property \'has_more_than_5_total_uri_count\''
                               }];
                               return false;
                             } else {
                               var errs_2 = errors;
-                              if (typeof data1.has_more_than_1000_total_uri_count !== "boolean") {
+                              if (typeof data1.has_more_than_5_total_uri_count !== "boolean") {
                                 validate.errors = [{
                                   keyword: 'type',
-                                  dataPath: (dataPath || '') + '.boolean_client_context_features.has_more_than_1000_total_uri_count',
-                                  schemaPath: '#/properties/boolean_client_context_features/properties/has_more_than_1000_total_uri_count/type',
+                                  dataPath: (dataPath || '') + '.boolean_client_context_features.has_more_than_5_total_uri_count',
+                                  schemaPath: '#/properties/boolean_client_context_features/properties/has_more_than_5_total_uri_count/type',
                                   params: {
                                     type: 'boolean'
                                   },
@@ -936,25 +936,25 @@ var validate = (function() {
                                               var valid2 = errors === errs_2;
                                             }
                                             if (valid2) {
-                                              if (data1.profile_at_least_7_days_old === undefined) {
+                                              if (data1.profile_more_than_60_days_old === undefined) {
                                                 valid2 = false;
                                                 validate.errors = [{
                                                   keyword: 'required',
                                                   dataPath: (dataPath || '') + '.boolean_client_context_features',
                                                   schemaPath: '#/properties/boolean_client_context_features/required',
                                                   params: {
-                                                    missingProperty: 'profile_at_least_7_days_old'
+                                                    missingProperty: 'profile_more_than_60_days_old'
                                                   },
-                                                  message: 'should have required property \'profile_at_least_7_days_old\''
+                                                  message: 'should have required property \'profile_more_than_60_days_old\''
                                                 }];
                                                 return false;
                                               } else {
                                                 var errs_2 = errors;
-                                                if (typeof data1.profile_at_least_7_days_old !== "boolean") {
+                                                if (typeof data1.profile_more_than_60_days_old !== "boolean") {
                                                   validate.errors = [{
                                                     keyword: 'type',
-                                                    dataPath: (dataPath || '') + '.boolean_client_context_features.profile_at_least_7_days_old',
-                                                    schemaPath: '#/properties/boolean_client_context_features/properties/profile_at_least_7_days_old/type',
+                                                    dataPath: (dataPath || '') + '.boolean_client_context_features.profile_more_than_60_days_old',
+                                                    schemaPath: '#/properties/boolean_client_context_features/properties/profile_more_than_60_days_old/type',
                                                     params: {
                                                       type: 'boolean'
                                                     },
@@ -1260,7 +1260,7 @@ validate.schema = {
         "firefox_account_prefs_configured": {
           "type": "boolean"
         },
-        "profile_age": {
+        "profile_age_in_ms": {
           "type": "number"
         },
         "main_monitor_screen_width": {
@@ -1273,7 +1273,7 @@ validate.schema = {
           "type": "string"
         }
       },
-      "required": ["has_firefox_as_default_browser", "active_ticks", "total_uri_count", "about_preferences_non_default_value_count", "self_installed_addons_count", "self_installed_popular_privacy_security_addons_count", "self_installed_themes_count", "dark_mode_active", "total_bookmarks_count", "logins_saved_in_the_browser_count", "firefox_account_prefs_configured", "profile_age", "main_monitor_screen_width", "update_channel", "locale"]
+      "required": ["has_firefox_as_default_browser", "active_ticks", "total_uri_count", "about_preferences_non_default_value_count", "self_installed_addons_count", "self_installed_popular_privacy_security_addons_count", "self_installed_themes_count", "dark_mode_active", "total_bookmarks_count", "logins_saved_in_the_browser_count", "firefox_account_prefs_configured", "profile_age_in_ms", "main_monitor_screen_width", "update_channel", "locale"]
     },
     "boolean_client_context_features": {
       "type": "object",
@@ -1281,10 +1281,10 @@ validate.schema = {
         "has_firefox_as_default_browser": {
           "type": "boolean"
         },
-        "has_more_than_five_days_of_active_ticks": {
+        "has_more_than_12_active_ticks": {
           "type": "boolean"
         },
-        "has_more_than_1000_total_uri_count": {
+        "has_more_than_5_total_uri_count": {
           "type": "boolean"
         },
         "has_more_than_1_about_preferences_non_default_value_count": {
@@ -1311,7 +1311,7 @@ validate.schema = {
         "firefox_account_prefs_configured": {
           "type": "boolean"
         },
-        "profile_at_least_7_days_old": {
+        "profile_more_than_60_days_old": {
           "type": "boolean"
         },
         "main_monitor_screen_width_gt_2000": {
@@ -1327,7 +1327,7 @@ validate.schema = {
           "type": "boolean"
         }
       },
-      "required": ["has_firefox_as_default_browser", "has_more_than_five_days_of_active_ticks", "has_more_than_1000_total_uri_count", "has_more_than_1_about_preferences_non_default_value_count", "has_at_least_one_self_installed_addon", "has_at_least_one_self_installed_popular_privacy_security_addon", "has_at_least_one_self_installed_theme", "dark_mode_active", "has_more_than_5_bookmarks", "has_at_least_one_login_saved_in_the_browser", "firefox_account_prefs_configured", "profile_at_least_7_days_old", "main_monitor_screen_width_gt_2000", "is_release_channel", "locale_is_en_us", "locale_is_de"]
+      "required": ["has_firefox_as_default_browser", "has_more_than_12_active_ticks", "has_more_than_5_total_uri_count", "has_more_than_1_about_preferences_non_default_value_count", "has_at_least_one_self_installed_addon", "has_at_least_one_self_installed_popular_privacy_security_addon", "has_at_least_one_self_installed_theme", "dark_mode_active", "has_more_than_5_bookmarks", "has_at_least_one_login_saved_in_the_browser", "firefox_account_prefs_configured", "profile_more_than_60_days_old", "main_monitor_screen_width_gt_2000", "is_release_channel", "locale_is_en_us", "locale_is_de"]
     },
     "features_array_used_in_score_computation": {
       "type": "array",

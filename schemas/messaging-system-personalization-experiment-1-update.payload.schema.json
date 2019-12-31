@@ -49,7 +49,7 @@
         "firefox_account_prefs_configured": {
           "type": "boolean"
         },
-        "profile_age": {
+        "profile_age_in_ms": {
           "type": "number"
         },
         "main_monitor_screen_width": {
@@ -74,7 +74,7 @@
         "total_bookmarks_count",
         "logins_saved_in_the_browser_count",
         "firefox_account_prefs_configured",
-        "profile_age",
+        "profile_age_in_ms",
         "main_monitor_screen_width",
         "update_channel",
         "locale"
@@ -86,10 +86,10 @@
         "has_firefox_as_default_browser": {
           "type": "boolean"
         },
-        "has_more_than_five_days_of_active_ticks": {
+        "has_more_than_12_active_ticks": {
           "type": "boolean"
         },
-        "has_more_than_1000_total_uri_count": {
+        "has_more_than_5_total_uri_count": {
           "type": "boolean"
         },
         "has_more_than_1_about_preferences_non_default_value_count": {
@@ -116,7 +116,7 @@
         "firefox_account_prefs_configured": {
           "type": "boolean"
         },
-        "profile_at_least_7_days_old": {
+        "profile_more_than_60_days_old": {
           "type": "boolean"
         },
         "main_monitor_screen_width_gt_2000": {
@@ -134,8 +134,8 @@
       },
       "required": [
         "has_firefox_as_default_browser",
-        "has_more_than_five_days_of_active_ticks",
-        "has_more_than_1000_total_uri_count",
+        "has_more_than_12_active_ticks",
+        "has_more_than_5_total_uri_count",
         "has_more_than_1_about_preferences_non_default_value_count",
         "has_at_least_one_self_installed_addon",
         "has_at_least_one_self_installed_popular_privacy_security_addon",
@@ -144,7 +144,7 @@
         "has_more_than_5_bookmarks",
         "has_at_least_one_login_saved_in_the_browser",
         "firefox_account_prefs_configured",
-        "profile_at_least_7_days_old",
+        "profile_more_than_60_days_old",
         "main_monitor_screen_width_gt_2000",
         "is_release_channel",
         "locale_is_en_us",
