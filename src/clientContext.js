@@ -211,7 +211,9 @@ const getClientContext = async () => {
       !theme.blocklisted &&
       !theme.userDisabled &&
       ![
-        // TODO: Compile list of themes shipped with various versions of firefox here
+        // List of themes shipped with firefox
+        // Based on directory listing in mozilla-central/browser/themes/addons
+        "firefox-compact-light@mozilla.org",
         "firefox-compact-dark@mozilla.org",
       ].includes(theme.id),
   );
