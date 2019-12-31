@@ -1,4 +1,4 @@
-/* global getClientContext, computeScores, uploadEvaluatedFeatures */
+/* global getClientContext, computeScores, performSanityChecks, uploadEvaluatedFeatures */
 
 const configByAddonId = {
   "messaging-system-personalization-experiment-1-addon-control@mozilla.org": {
@@ -170,11 +170,8 @@ const onModelUpdate = async cfrMlModelsCollectionRecords => {
 
     const personalizedModelVersion = cfrMlModelsRecord.version;
 
-    console.info("Sanity checking written prefs");
-    const scoreThreshold = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
-    const scores = await browser.privileged.personalizedCfrPrefs.getScores();
-    console.debug({ scoreThreshold, scores });
-    // TODO: Sanity check
+    console.info("Performing sanity checks");
+    await performSanityChecks(computedScores, configuredScoreThreshold);
 
     console.info(
       "Submitting evaluated features for consumption by the model training job",
