@@ -37,10 +37,6 @@ const run = async () => {
       console.info("Eligible");
     }
 
-    // TODO - double-check that study has not already ended
-    const study = await browser.normandyAddonStudy.getStudy();
-    console.debug({ study });
-
     const { hasRunInitiationAtLeastOnce } = await browser.storage.local.get(
       "hasRunInitiationAtLeastOnce",
     );
