@@ -4,11 +4,24 @@ const performSanityChecks = async (
   computedScores,
   configuredScoreThreshold,
 ) => {
-  console.debug({ computedScores, configuredScoreThreshold });
+  console.debug({ computedScores });
 
   console.info("Sanity checking written prefs");
-  const scoreThreshold = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
-  const scores = await browser.privileged.personalizedCfrPrefs.getScores();
-  console.debug({ scoreThreshold, scores });
-  // TODO: Sanity check
+  const scoreThresholdReadFromPrefs = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
+  if (scoreThresholdReadFromPrefs !== configuredScoreThreshold) {
+    console.debug({
+      scoreThresholdReadFromPrefs,
+      configuredScoreThreshold,
+    });
+    throw new Error(
+      "The preference-written score threshold is different from the configured score threshold",
+    );
+  }
+  const scoresReadFromPrefs = await browser.privileged.personalizedCfrPrefs.getScores();
+  if (JSON.stringify(scoresReadFromPrefs) !== JSON.stringify(computedScores)) {
+    console.debug({ scoresReadFromPrefs, computedScores });
+    throw new Error(
+      "The preference-written scores are different from the computed scores",
+    );
+  }
 };
