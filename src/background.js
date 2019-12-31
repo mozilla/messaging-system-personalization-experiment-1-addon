@@ -26,6 +26,10 @@ const configuredScoreThreshold = config.scoreThreshold;
 
 const onError = async e => {
   console.error(e);
+  if (e.message.indexOf("NetworkError") > -1) {
+    // Do not unenroll on network errors
+    return;
+  }
   const study = await browser.normandyAddonStudy.getStudy();
   if (study) {
     console.info(
