@@ -24,9 +24,20 @@ console.debug({ config });
 const periodicAlarmName = `${browser.runtime.id}:periodicCfrModelsPolling`;
 const configuredScoreThreshold = config.scoreThreshold;
 
-const onError = e => {
+const onError = async e => {
   console.error(e);
-  browser.normandyAddonStudy.endStudy("CAUGHT_ERROR");
+  const study = await browser.normandyAddonStudy.getStudy();
+  if (study) {
+    console.info(
+      "An unexpected error was thrown - telling Normandy to end study",
+    );
+    browser.normandyAddonStudy.endStudy("CAUGHT_ERROR");
+  } else {
+    console.info(
+      "An unexpected error was thrown during development mode / without Normandy - running onUnenroll callback directly",
+    );
+    onUnenroll("CAUGHT_ERROR");
+  }
 };
 
 const run = async () => {
