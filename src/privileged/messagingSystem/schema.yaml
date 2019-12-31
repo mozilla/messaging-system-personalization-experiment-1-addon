@@ -32,6 +32,11 @@
     - name: cohort
       type: string
       description: The cohort value
+  - name: getOrCreateImpressionId
+    type: function
+    async: true
+    description: Exposes TelemetryFeed.getOrSetImpressionId()
+    parameters: []
   - name: getASRouterTargetingGetters
     type: function
     async: true

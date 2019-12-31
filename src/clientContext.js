@@ -242,9 +242,9 @@ const getClientContext = async () => {
     total_bookmarks_count: asRouterTargetingGetters.totalBookmarksCount,
     logins_saved_in_the_browser_count: await browser.privileged.clientContext.getLoginsSavedInBrowserCount(),
     firefox_account_prefs_configured: await browser.privileged.clientContext.getFxAConfigured(),
-    update_channel: await browser.privileged.clientContext.getUpdateChannel(),
-    locale: asRouterTargetingGetters.locale,
     profile_age: Date.now() - asRouterTargetingGetters.profileAgeCreated,
     main_monitor_screen_width: await browser.privileged.clientContext.getMainMonitorScreenWidth(),
+    update_channel: await browser.privileged.clientContext.getUpdateChannel(),
+    locale: asRouterTargetingGetters.locale,
   };
 };

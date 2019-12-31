@@ -1,4 +1,4 @@
-/* global getClientContext, BernoulliNB */
+/* global getClientContext, BernoulliNB, uploadEvaluatedFeatures */
 
 const configByAddonId = {
   "messaging-system-personalization-experiment-1-addon-control@mozilla.org": {
@@ -271,6 +271,16 @@ const computeScores = async cfrMlModelsCollectionRecords => {
     const scores = await browser.privileged.personalizedCfrPrefs.getScores();
     console.debug({ scoreThreshold, scores });
     // TODO: Sanity check
+
+    console.info(
+      "Submitting evaluated features for consumption by the model training job",
+    );
+    await uploadEvaluatedFeatures(
+      personalizedModelVersion,
+      clientContext,
+      booleanFeatures,
+      features,
+    );
 
     console.info(
       "Setting the CFR provider pref with bucket, cohort and personalizedModelVersion",

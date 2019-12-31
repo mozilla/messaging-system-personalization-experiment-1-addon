@@ -21,6 +21,12 @@ getCfrProviderMessages
   - \$ref:
   - optional: false
 
+### `browser.privileged.messagingSystem.getOrCreateImpressionId( )`
+
+Exposes TelemetryFeed.getOrSetImpressionId()
+
+**Parameters**
+
 ### `browser.privileged.messagingSystem.getASRouterTargetingGetters( gettersList )`
 
 getASRouterTargetingGetters

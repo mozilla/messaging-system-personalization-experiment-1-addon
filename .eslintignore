@@ -1,6 +1,7 @@
 # do not lint/format generated artifacts
 dist/
 web-ext-artifacts/
+src/validate.js
 package-lock.json
 # makes sure that eslintrc.js gets linted/formatted
 !.eslintrc.js

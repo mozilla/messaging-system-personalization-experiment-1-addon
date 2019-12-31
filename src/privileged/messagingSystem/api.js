@@ -23,6 +23,10 @@ this.messagingSystem = class extends ExtensionAPI {
     );
     const { ExtensionError } = ExtensionUtils;
 
+    const { TelemetryFeed } = ChromeUtils.import(
+      "resource://activity-stream/lib/TelemetryFeed.jsm",
+      {},
+    );
     const { RemoteSettings } = ChromeUtils.import(
       "resource://services-settings/remote-settings.js",
       {},
@@ -84,6 +88,18 @@ this.messagingSystem = class extends ExtensionAPI {
                 cfrProviderPref,
                 {},
               );
+            } catch (error) {
+              // Surface otherwise silent or obscurely reported errors
+              console.error(error.message, error.stack);
+              throw new ExtensionError(error.message);
+            }
+          },
+
+          /* getOrCreateImpressionId */
+          getOrCreateImpressionId: async function getOrCreateImpressionId() {
+            try {
+              const tf = new TelemetryFeed();
+              return tf.getOrCreateImpressionId();
             } catch (error) {
               // Surface otherwise silent or obscurely reported errors
               console.error(error.message, error.stack);
