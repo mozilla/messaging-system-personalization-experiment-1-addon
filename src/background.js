@@ -74,9 +74,6 @@ const isEligible = async () => {
 };
 
 const firstRun = async () => {
-  console.info(`Force syncing "${bucket}" bucket contents`);
-  await browser.privileged.remoteSettings.clearLocalDataAndForceSync(bucket);
-
   if (config.branch === "control") {
     console.info("Writing hard-coded provider cfr pref", { bucket, cohort });
     await browser.privileged.messagingSystem.setASRouterCfrProviderPref(
