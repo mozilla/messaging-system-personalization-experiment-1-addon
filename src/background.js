@@ -143,7 +143,7 @@ const onUnenroll = async reason => {
 
 const onModelUpdate = async cfrMlModelsCollectionRecords => {
   /**
-   * @typedef {Object} Classifier
+   * @typedef {Object} Model
    * @property {float[]} priors Priors
    * @property {float[][]} delProbs Delta probs
    * @property {float[][]} negProbs Neg probs
@@ -151,7 +151,7 @@ const onModelUpdate = async cfrMlModelsCollectionRecords => {
   /**
    * @typedef {Object} CfrMlModelsRecord
    * @property {string} version Model version
-   * @property {Object.<string, Classifier>} models_by_cfr_id Models by CFR id
+   * @property {Object.<string, Model>} models_by_cfr_id Models by CFR id
    */
 
   try {
@@ -204,7 +204,7 @@ const onModelUpdate = async cfrMlModelsCollectionRecords => {
       personalizedModelVersion,
     );
 
-    console.info("onCfrModelsSync callback finished");
+    console.info("onModelUpdate callback finished");
   } catch (e) {
     onError(e);
   }

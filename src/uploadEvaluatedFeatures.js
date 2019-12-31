@@ -35,7 +35,7 @@ const uploadEvaluatedFeatures = async (
   });
 
   /**
-   * A experiment-telemetry-specific version of TelemetryFeed.applyCFRPolicy
+   * A this-experiment-specific version of TelemetryFeed.applyCFRPolicy
    * Permalink of the origin code at the time of authoring this shorter version:
    * https://dxr.mozilla.org/mozilla-central/rev/7c47e27e43c19a724a1353197f89a51298cad2fd/browser/components/newtab/lib/TelemetryFeed.jsm#596-614
    *
