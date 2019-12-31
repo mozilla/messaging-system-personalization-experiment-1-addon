@@ -6,9 +6,7 @@ See [TESTPLAN.md](./docs/TESTPLAN.md) for more details on how to get the add-on 
 
 ## Data Collected / Telemetry Pings
 
-The add-on modifies certain preferences whose values will be included as metadata in the ordinary Messaging System telemetry.
-
-No pings are sent directly by this add-on.
+See [TELEMETRY.md](./docs/TELEMETRY.md) for more details on what pings are sent by this add-on.
 
 ## Improving this add-on
 
