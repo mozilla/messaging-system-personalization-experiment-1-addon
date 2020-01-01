@@ -4,7 +4,18 @@ const performSanityChecks = async (
   computedScores,
   configuredScoreThreshold,
 ) => {
-  console.debug({ computedScores });
+  const scoresArray = Object.keys(computedScores).map(
+    key => computedScores[key],
+  );
+
+  console.info("Checking that scores all are of integer values");
+  const foundNonIntegerScore =
+    scoresArray.find(score => {
+      return !Number.isInteger(score);
+    }) !== undefined;
+  if (foundNonIntegerScore) {
+    throw new Error("Scores must be integer values");
+  }
 
   console.info("Sanity checking written prefs");
   const scoreThresholdReadFromPrefs = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
