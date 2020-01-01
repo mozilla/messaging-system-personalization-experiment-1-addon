@@ -97,8 +97,8 @@ const computeScores = async (
     const { priors, negProbs, delProbs } = model;
 
     const clf = new BernoulliNB(priors, negProbs, delProbs);
-    const jll = clf._joint_log_likelihood(features);
-    console.debug("Computed jll", { cfrId, model, clf, jll });
+    const probabilities = clf.predict_proba(features);
+    console.debug("Computed probabilities", { cfrId, model, clf, probabilities });
 
     // TODO: Correct translation to a 0-10k score
     return -1;
