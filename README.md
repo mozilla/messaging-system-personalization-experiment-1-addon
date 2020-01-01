@@ -1,5 +1,13 @@
 # Messaging System Personalization Experiment 1 Add-on
 
+## What the add-on does
+
+On a 60 minute schedule, the add-on fetches the latest ml model from remote settings, evaluates features and computes scores for each CFR message in the experiment.
+
+The scores are persisted via preferences, which affects how often and which messages from the messaging system are displayed.
+
+The evaluated features are sent via telemetry to a model training job so that the model gets improved over time.
+
 ## Seeing the add-on in action
 
 See [TESTPLAN.md](./docs/TESTPLAN.md) for more details on how to get the add-on installed and tested.

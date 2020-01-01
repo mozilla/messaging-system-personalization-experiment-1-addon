@@ -2,9 +2,15 @@
 
 ## Data we are collecting
 
-On a 60 minute schedule, the add-on will fetch the latest ml model, evaluate features and compute rankings for each CFR message in the experiment. 
+On a 60 minute schedule, evaluated features are sent via telemetry to a model training job so that the model gets improved over time.
 
-The evaluated features will be sent to a model training job so that the model fetched by the clients gets improved over time.
+The following data is sent with this ping:
+
+| name                                                                                             | type              | description                                                                                                    |
+| ------------------------------------------------------------------------------------------------ | ----------------- | -------------------------------------------------------------------------------------------------------------- |
+| `model_version`                                                                                  | integer           | the version of the model that was available at the time of feature evaluation                                  |
+| `study_variation`                                                                                | string            | the add-on id, which is specific to the branch/variation that the user is enrolled in (e.g. treatment/control) |
+| `study_addon_version`                                                                            | string            | the version of the study add-on                                                                                |
 
 ### Example payload
 
@@ -82,3 +88,4 @@ The add-on fetches the model version used in the experiment, which in turn is [i
 ## References
 
 - [Payload ping schema](../schemas/messaging-system-personalization-experiment-1-update.payload.schema.json)
+- [CFR Machine Learning Experiment - Feature space](https://docs.google.com/spreadsheets/d/1PXJgQpL9DmL6ph7-pKQ4jAHLJKdOg5Ha2vG6mTpAB6M/edit?pli=1#gid=0&fvid=1458837602)

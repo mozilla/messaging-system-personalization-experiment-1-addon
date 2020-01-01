@@ -43,7 +43,7 @@ Either install the add-on using a Normandy server or follow the following steps:
 
 - Open the browser console using Firefox's top menu at `Tools > Web Developer > Browser Console`
 - Go into DevTools -> Settings (F1) and enable the checkbox for "Enable browser chrome and add-on debugging toolboxes"
-- Base on the variant that is being tested (control or treatment), run one of the following in the Browser Console:
+- Based on the variant that is being tested (control or treatment), run one of the following in the Browser Console:
 
 Treatment:
 
