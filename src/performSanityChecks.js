@@ -24,4 +24,24 @@ const performSanityChecks = async (
       "The preference-written scores are different from the computed scores",
     );
   }
+  console.info("Sanity checking related targeting getters");
+  const asRouterTargetingGetters = await browser.privileged.messagingSystem.getASRouterTargetingGetters(
+    ["scores", "scoreThreshold"],
+  );
+  const { scores, scoreThreshold } = asRouterTargetingGetters;
+  if (scoreThreshold !== configuredScoreThreshold) {
+    console.debug({
+      scoreThreshold,
+      configuredScoreThreshold,
+    });
+    throw new Error(
+      "The score threshold from ASRouterTargetingGetters is different from the configured score threshold",
+    );
+  }
+  if (JSON.stringify(scores) !== JSON.stringify(computedScores)) {
+    console.debug({ scores, computedScores });
+    throw new Error(
+      "The scores from ASRouterTargetingGetters are different from the computed scores",
+    );
+  }
 };
