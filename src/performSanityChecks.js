@@ -17,6 +17,14 @@ const performSanityChecks = async (
     throw new Error("Scores must be integer values");
   }
 
+  console.info("Checking that scores all fall within the range 0-10000");
+  const minScore = Math.min(...scoresArray);
+  const maxScore = Math.max(...scoresArray);
+  if (minScore < 0 || minScore > 10000 || maxScore < 0 || maxScore > 10000) {
+    console.log({ minScore, maxScore });
+    throw new Error("Scores must all fall within the range 0-10000");
+  }
+
   console.info("Sanity checking written prefs");
   const scoreThresholdReadFromPrefs = await browser.privileged.personalizedCfrPrefs.getScoreThreshold();
   if (scoreThresholdReadFromPrefs !== configuredScoreThreshold) {
