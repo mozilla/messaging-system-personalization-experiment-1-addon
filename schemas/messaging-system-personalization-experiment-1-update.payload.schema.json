@@ -119,7 +119,7 @@
         "profile_more_than_60_days_old": {
           "type": "boolean"
         },
-        "main_monitor_screen_width_gt_2000": {
+        "main_monitor_screen_width_gt_1280": {
           "type": "boolean"
         },
         "is_release_channel": {
@@ -145,7 +145,7 @@
         "has_at_least_one_login_saved_in_the_browser",
         "firefox_account_prefs_configured",
         "profile_more_than_60_days_old",
-        "main_monitor_screen_width_gt_2000",
+        "main_monitor_screen_width_gt_1280",
         "is_release_channel",
         "locale_is_en_us",
         "locale_is_de"

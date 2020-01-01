@@ -49,7 +49,7 @@ The following data is sent with this ping:
     "has_at_least_one_login_saved_in_the_browser": false,
     "firefox_account_prefs_configured": false,
     "profile_more_than_60_days_old": false,
-    "main_monitor_screen_width_gt_2000": false,
+    "main_monitor_screen_width_gt_1280": false,
     "is_release_channel": false,
     "locale_is_en_us": true,
     "locale_is_de": false

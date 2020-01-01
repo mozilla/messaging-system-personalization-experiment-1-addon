@@ -965,25 +965,25 @@ var validate = (function() {
                                                 var valid2 = errors === errs_2;
                                               }
                                               if (valid2) {
-                                                if (data1.main_monitor_screen_width_gt_2000 === undefined) {
+                                                if (data1.main_monitor_screen_width_gt_1280 === undefined) {
                                                   valid2 = false;
                                                   validate.errors = [{
                                                     keyword: 'required',
                                                     dataPath: (dataPath || '') + '.boolean_client_context_features',
                                                     schemaPath: '#/properties/boolean_client_context_features/required',
                                                     params: {
-                                                      missingProperty: 'main_monitor_screen_width_gt_2000'
+                                                      missingProperty: 'main_monitor_screen_width_gt_1280'
                                                     },
-                                                    message: 'should have required property \'main_monitor_screen_width_gt_2000\''
+                                                    message: 'should have required property \'main_monitor_screen_width_gt_1280\''
                                                   }];
                                                   return false;
                                                 } else {
                                                   var errs_2 = errors;
-                                                  if (typeof data1.main_monitor_screen_width_gt_2000 !== "boolean") {
+                                                  if (typeof data1.main_monitor_screen_width_gt_1280 !== "boolean") {
                                                     validate.errors = [{
                                                       keyword: 'type',
-                                                      dataPath: (dataPath || '') + '.boolean_client_context_features.main_monitor_screen_width_gt_2000',
-                                                      schemaPath: '#/properties/boolean_client_context_features/properties/main_monitor_screen_width_gt_2000/type',
+                                                      dataPath: (dataPath || '') + '.boolean_client_context_features.main_monitor_screen_width_gt_1280',
+                                                      schemaPath: '#/properties/boolean_client_context_features/properties/main_monitor_screen_width_gt_1280/type',
                                                       params: {
                                                         type: 'boolean'
                                                       },
@@ -1314,7 +1314,7 @@ validate.schema = {
         "profile_more_than_60_days_old": {
           "type": "boolean"
         },
-        "main_monitor_screen_width_gt_2000": {
+        "main_monitor_screen_width_gt_1280": {
           "type": "boolean"
         },
         "is_release_channel": {
@@ -1327,7 +1327,7 @@ validate.schema = {
           "type": "boolean"
         }
       },
-      "required": ["has_firefox_as_default_browser", "has_more_than_12_active_ticks", "has_more_than_5_total_uri_count", "has_more_than_1_about_preferences_non_default_value_count", "has_at_least_one_self_installed_addon", "has_at_least_one_self_installed_popular_privacy_security_addon", "has_at_least_one_self_installed_theme", "dark_mode_active", "has_more_than_5_bookmarks", "has_at_least_one_login_saved_in_the_browser", "firefox_account_prefs_configured", "profile_more_than_60_days_old", "main_monitor_screen_width_gt_2000", "is_release_channel", "locale_is_en_us", "locale_is_de"]
+      "required": ["has_firefox_as_default_browser", "has_more_than_12_active_ticks", "has_more_than_5_total_uri_count", "has_more_than_1_about_preferences_non_default_value_count", "has_at_least_one_self_installed_addon", "has_at_least_one_self_installed_popular_privacy_security_addon", "has_at_least_one_self_installed_theme", "dark_mode_active", "has_more_than_5_bookmarks", "has_at_least_one_login_saved_in_the_browser", "firefox_account_prefs_configured", "profile_more_than_60_days_old", "main_monitor_screen_width_gt_1280", "is_release_channel", "locale_is_en_us", "locale_is_de"]
     },
     "features_array_used_in_score_computation": {
       "type": "array",

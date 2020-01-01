@@ -39,7 +39,7 @@ const computeScores = async (
       clientContext.firefox_account_prefs_configured,
     profile_more_than_60_days_old:
       clientContext.profile_age_in_ms > 1000 * 60 * 60 * 24 * 60,
-    main_monitor_screen_width_gt_2000:
+    main_monitor_screen_width_gt_1280:
       clientContext.main_monitor_screen_width > 2000,
     is_release_channel: clientContext.update_channel === "release",
     locale_is_en_us: clientContext.locale === "en-US",
@@ -61,7 +61,7 @@ const computeScores = async (
     "has_at_least_one_login_saved_in_the_browser", // index 9
     "firefox_account_prefs_configured", // index 10
     "profile_more_than_60_days_old", // index 11
-    "main_monitor_screen_width_gt_2000", // index 12
+    "main_monitor_screen_width_gt_1280", // index 12
     "is_release_channel", // index 13
     "locale_is_en_us", // index 14
     "locale_is_de", // index 15
