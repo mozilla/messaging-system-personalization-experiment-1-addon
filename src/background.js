@@ -177,7 +177,7 @@ const onModelUpdate = async cfrMlModelsCollectionRecords => {
       configuredScoreThreshold,
     );
 
-    console.info("Writing computed scores into prefs");
+    console.info("Writing computed scores into prefs", { computedScores });
     await browser.privileged.personalizedCfrPrefs.setScores(computedScores);
 
     const personalizedModelVersion = cfrMlModelsRecord.version;
