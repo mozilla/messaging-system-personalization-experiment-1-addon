@@ -49,6 +49,12 @@ Runs prettier and eslint --fix, tidying up the source code:
 yarn run format
 ```
 
+Generates and validates the web extension experiment schema JSON files based on the YAML schema definitions (see [https://github.com/mozilla/webext-experiment-utils]()):
+
+```bash
+yarn run generate
+```
+
 ## Base template
 
 This repository was based on [https://github.com/mozilla/normandy-nextgen-study-example]().
