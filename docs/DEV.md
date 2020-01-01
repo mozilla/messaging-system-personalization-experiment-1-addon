@@ -10,15 +10,25 @@ Access the output from these messages via [about:debugging#/runtime/this-firefox
 
 The console statements also serves as documentation within the source code.
 
-### Experiment APIs
+### Bundled Experiment APIs
 
+- `addonsMetadata`: Provides som add-on metadata used to determine some contextual client features
+- `clientContext`: For probing some of the contextual features on the client
 - `messagingSystem`: Access to certain parts of the messaging system
 - `personalizedCfrPrefs`: Read and write specific preferences under the `browser.messaging-system.personalized-cfr.*` namespace
+- `privacyContext`: Provides some information about private browsing context
+- `remoteSettings`: Access up to date remote settings collections contents
 - `testingOverrides`: Accesses additional preferences used for study testing
 
 ### Background scripts
 
-- `background.js` connects everything.
+- `BernoulliNB.js`: Contains a Bernoulli Naive Bayes classifier implementation
+- `clientContext.js`: Probes contextual features on the client
+- `computeScores.js`: Computes scores
+- `performSanityChecks.js`: Various sanity checks for good measure
+- `uploadEvaluatedFeatures.js`: Makes evaluated features available to the model training job
+- `validate.js`: The generated ajv schema validation class, for validating the telemetry payload before sending the telemetry
+- `background.js`: Connects everything
 
 ## Development
 
