@@ -227,6 +227,26 @@ await AddonStudies.add({
   - `personalized: true`
   - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 
+**Being offline should not unenroll the user from the study - Test 1**
+
+- Install a signed add-on as per above
+- Verify that the study runs
+- Go offline
+- Restart Firefox
+- Verify that the user is not unenrolled due to network connectivity issues (error output in the Add-on Toolbox Console is expected)
+- Go online
+- Verify that the periodic polling and score computation works again
+
+**Being offline should not unenroll the user from the study - Test 2**
+
+- Download a signed add-on as per above
+- Go offline
+- Install the signed add-on
+- Verify that the study runs
+- Verify that the user is not unenrolled due to network connectivity issues (error output in the Add-on Toolbox Console is expected)
+- Go online
+- Verify that the periodic polling and score computation works again
+
 **Not showing in `about:addons`**
 
 - Install a signed add-on as per above
