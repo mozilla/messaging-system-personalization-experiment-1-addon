@@ -6,11 +6,28 @@ On a 60 minute schedule, evaluated features are sent via telemetry to a model tr
 
 The following data is sent with this ping:
 
-| name                                                                                             | type              | description                                                                                                    |
-| ------------------------------------------------------------------------------------------------ | ----------------- | -------------------------------------------------------------------------------------------------------------- |
-| `model_version`                                                                                  | integer           | the version of the model that was available at the time of feature evaluation                                  |
-| `study_variation`                                                                                | string            | the add-on id, which is specific to the branch/variation that the user is enrolled in (e.g. treatment/control) |
-| `study_addon_version`                                                                            | string            | the version of the study add-on                                                                                |
+| name                                                                           | type              | description                                                                                                    |
+| ------------------------------------------------------------------------------ | ----------------- | -------------------------------------------------------------------------------------------------------------- |
+| `model_version`                                                                | integer           | the version of the model that was available at the time of feature evaluation                                  |
+| `study_variation`                                                              | string            | the add-on id, which is specific to the branch/variation that the user is enrolled in (e.g. treatment/control) |
+| `study_addon_version`                                                          | string            | the version of the study add-on                                                                                |
+| `client_context_features.has_firefox_as_default_browser`                       | boolean           | firefox as default browser                                                                                     |
+| `client_context_features.active_ticks`                                         | number            | active ticks                                                                                                   |
+| `client_context_features.total_uri_count`                                      | number            | total uri count                                                                                                |
+| `client_context_features.about_preferences_non_default_value_count`            | number            | prefs changed, specifically those from about:preferences                                                       |
+| `client_context_features.self_installed_addons_count`                          | number            | count of selfinstalled addons                                                                                  |
+| `client_context_features.self_installed_popular_privacy_security_addons_count` | number            | count of popular privacy/security addons                                                                       |
+| `client_context_features.self_installed_themes_count`                          | number            | count of selfinstalled themes                                                                                  |
+| `client_context_features.dark_mode_active`                                     | boolean           | dark mode active                                                                                               |
+| `client_context_features.total_bookmarks_count`                                | number            | how many bookmarks are saved                                                                                   |
+| `client_context_features.logins_saved_in_the_browser_count`                    | number            | count of logins saved in the browser                                                                           |
+| `client_context_features.firefox_account_prefs_configured`                     | boolean           | firefox accounts configured                                                                                    |
+| `client_context_features.profile_age_in_ms`                                    | number            | profile age (in ms)                                                                                            |
+| `client_context_features.main_monitor_screen_width`                            | number            | main monitor screen width                                                                                      |
+| `client_context_features.update_channel`                                       | string            | update channel (release, aurora etc)                                                                           |
+| `client_context_features.locale`                                               | string            | locale                                                                                                         |
+| `boolean_client_context_features`                                              | object            | boolean features based on client_context_features.\* above                                                     |
+| `features_array_used_in_score_computation`                                     | array of integers | boolean_client_context_features.\* mapped to integers (false -> 0, true -> 1)                                  |
 
 ### Example payload
 
