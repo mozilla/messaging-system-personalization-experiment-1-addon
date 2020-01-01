@@ -98,10 +98,17 @@ const computeScores = async (
 
     const clf = new BernoulliNB(priors, negProbs, delProbs);
     const probabilities = clf.predict_proba(features);
-    console.debug("Computed probabilities", { cfrId, model, clf, probabilities });
 
-    // TODO: Correct translation to a 0-10k score
-    return -1;
+    // Linear translation to a 0-10k score
+    // Since the sum of prob_rejection and prob_acceptance is 1
+    // We can simply multiply prob_acceptance with 10000 to get a score
+    // The result is floored so that scores of 5000 or more is only
+    // possible if prob_acceptance is greater than 0.5
+    // (Or else 0.49999 would lead to rounding to 5000 instead of 4999)
+    const prob_acceptance = probabilities[1];
+    const score = Math.floor(prob_acceptance * 10000);
+    // console.debug("Computed probabilities and resulting score", { cfrId, model, clf, probabilities, score});
+    return score;
   };
 
   experimentCfrIds.map(cfrId => {
