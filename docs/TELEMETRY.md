@@ -33,12 +33,12 @@ The following data is sent with this ping:
 
 ```json
 {
-  "model_version": 20191231165308,
+  "model_version": 20200102082643,
   "study_variation": "messaging-system-personalization-experiment-1-addon-treatment@mozilla.org",
-  "study_addon_version": "0.3.0",
+  "study_addon_version": "1.0.0",
   "client_context_features": {
     "has_firefox_as_default_browser": true,
-    "active_ticks": 8,
+    "active_ticks": 5,
     "total_uri_count": 1,
     "about_preferences_non_default_value_count": 1,
     "self_installed_addons_count": 0,
@@ -48,7 +48,7 @@ The following data is sent with this ping:
     "total_bookmarks_count": 5,
     "logins_saved_in_the_browser_count": 0,
     "firefox_account_prefs_configured": false,
-    "profile_age_in_ms": 41417,
+    "profile_age_in_ms": 26604,
     "main_monitor_screen_width": 1680,
     "update_channel": "aurora",
     "locale": "en-US"
@@ -66,7 +66,7 @@ The following data is sent with this ping:
     "has_at_least_one_login_saved_in_the_browser": false,
     "firefox_account_prefs_configured": false,
     "profile_more_than_60_days_old": false,
-    "main_monitor_screen_width_gt_1280": false,
+    "main_monitor_screen_width_gt_1280": true,
     "is_release_channel": false,
     "locale_is_en_us": true,
     "locale_is_de": false
@@ -84,7 +84,7 @@ The following data is sent with this ping:
     0,
     0,
     0,
-    0,
+    1,
     0,
     1,
     0

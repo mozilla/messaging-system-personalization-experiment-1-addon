@@ -40,7 +40,7 @@ const computeScores = async (
     profile_more_than_60_days_old:
       clientContext.profile_age_in_ms > 1000 * 60 * 60 * 24 * 60,
     main_monitor_screen_width_gt_1280:
-      clientContext.main_monitor_screen_width > 2000,
+      clientContext.main_monitor_screen_width > 1280,
     is_release_channel: clientContext.update_channel === "release",
     locale_is_en_us: clientContext.locale === "en-US",
     locale_is_de: clientContext.locale === "de",
