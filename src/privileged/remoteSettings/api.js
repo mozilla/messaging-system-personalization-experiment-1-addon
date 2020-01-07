@@ -14,7 +14,7 @@ Cu.importGlobalProperties(["fetch"]);
 const allowListedCollections = [
   "cfr-ml-control",
   "cfr-ml-experiments",
-  "cfr-ml-model",
+  "cfr-ml-models",
 ];
 
 this.remoteSettings = class extends ExtensionAPI {

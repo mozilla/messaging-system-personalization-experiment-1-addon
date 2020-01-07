@@ -101,11 +101,11 @@ const everyRun = async () => {
     const alarmListener = async alarm => {
       if (alarm.name === periodicAlarmName) {
         console.info(
-          `Fetching "cfr-ml-model" bucket contents directly from the remote settings server endpoint`,
+          `Fetching "cfr-ml-models" bucket contents directly from the remote settings server endpoint`,
         );
-        // Imports models from remote settings (`cfr-ml-model` bucket)
+        // Imports models from remote settings (`cfr-ml-models` bucket)
         const cfrMlModelsCollectionRecords = await browser.privileged.remoteSettings.fetchFromEndpointDirectly(
-          "cfr-ml-model",
+          "cfr-ml-models",
         );
         await onModelUpdate(cfrMlModelsCollectionRecords);
       }

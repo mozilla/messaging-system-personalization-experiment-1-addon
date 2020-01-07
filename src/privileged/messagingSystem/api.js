@@ -174,9 +174,9 @@ this.messagingSystem = class extends ExtensionAPI {
               const listener = async (...args) => {
                 await fire.async(...args);
               };
-              RemoteSettings("cfr-ml-model").on("sync", listener);
+              RemoteSettings("cfr-ml-models").on("sync", listener);
               return () => {
-                RemoteSettings("cfr-ml-model").off("sync", listener);
+                RemoteSettings("cfr-ml-models").off("sync", listener);
               };
             },
           }).api(),
