@@ -81,6 +81,14 @@ const uploadEvaluatedFeatures = async (
     addClientId,
     addEnvironment: false,
   };
+
+  if (payload.client_context_features.total_uri_count === 0) {
+    // In some cases - the total_uri_count returned from 
+    // browser.privileged.clientContext.getTotalUriCount() returns an
+    // `undefined`.   In those cases, we just skip the current ping.
+    console.log(`Skipped due to missing total_uri_count: "${telemetryTopic}" telemetry:`, payload);
+    return;
+  }
   await browser.telemetry.submitPing(type, message, options);
   console.log(`Submitted "${telemetryTopic}" telemetry:`, payload);
 };
