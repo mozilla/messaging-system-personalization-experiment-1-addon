@@ -232,7 +232,7 @@ const getClientContext = async () => {
   return {
     has_firefox_as_default_browser: asRouterTargetingGetters.isDefaultBrowser,
     active_ticks: await browser.privileged.clientContext.getActiveTicks(),
-    total_uri_count: await browser.privileged.clientContext.getTotalUriCount(),
+    total_uri_count: await browser.privileged.clientContext.getTotalUriCount() || 0,
     about_preferences_non_default_value_count: await browser.privileged.clientContext.getAboutPreferencesNonDefaultValueCount(),
     self_installed_addons_count: listOfSelfInstalledEnabledAddons.length,
     self_installed_popular_privacy_security_addons_count:
