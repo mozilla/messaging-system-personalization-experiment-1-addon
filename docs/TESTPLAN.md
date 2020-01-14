@@ -19,14 +19,14 @@ No surveys are fired by this add-on.
 
 ### Using the Remote Settings development server
 
-Until the experiment-specific remote settings buckets (`cfr-ml-control`, `cfr-ml-experiments` and `cfr-ml-model`) are provisioned in a live environment, we use the Remote Settings development server when testing the add-on:
+Until the experiment-specific remote settings buckets (`cfr-ml-control`, `cfr-ml-experiments` and `cfr-ml-models`) are provisioned in a live environment, we use the Remote Settings development server when testing the add-on:
 
 - Check existing Remote Settings development server contents using:
 
 ```
 curl https://kinto.dev.mozaws.net/v1//buckets/main/collections/cfr-ml-control/records
 curl https://kinto.dev.mozaws.net/v1//buckets/main/collections/cfr-ml-experiments/records
-curl https://kinto.dev.mozaws.net/v1//buckets/main/collections/cfr-ml-model/records
+curl https://kinto.dev.mozaws.net/v1//buckets/main/collections/cfr-ml-models/records
 ```
 
 - If there is no data to be found, run [this script](../seed-remote-settings-dev-server.sh) in a terminal (has to be run once each day the add-on is to be tested since the development server is reset every 24h)
@@ -34,7 +34,7 @@ curl https://kinto.dev.mozaws.net/v1//buckets/main/collections/cfr-ml-model/reco
 - Add if not exists and set the `services.settings.server` preference to `https://kinto.dev.mozaws.net/v1`
 - Install the Remote Settings Devtools add-on (Go to https://github.com/mozilla/remote-settings-devtools/releases and install directly from the `remote-settings-devtools@mozilla.com-1.2.0-signed.xpi` release link).
 - Click the rightmost green puzzle icon to visit the Remote Settings Devtools.
-- Verify that the collections `cfr-ml-control`, `cfr-ml-experiments` and `cfr-ml-model` are listed in the Remote Settings Devtools UI
+- Verify that the collections `cfr-ml-control`, `cfr-ml-experiments` and `cfr-ml-models` are listed in the Remote Settings Devtools UI
 - Verify that some sort of messages are listed when clicking on each model in the Remote Settings Devtools UI
 
 ### Enroll in the study and install the add-on
@@ -120,7 +120,7 @@ await AddonStudies.add({
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is empty or does not exist
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is empty or does not exist
 - Visit the Remote Settings Devtools page
-- Next to the cfr-ml-model entry, click `Force Sync`.
+- Next to the cfr-ml-models entry, click `Force Sync`.
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is empty or does not exist
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is empty or does not exist
 
@@ -130,7 +130,7 @@ await AddonStudies.add({
 - Verify that the study runs
 - Verify that the `browser.newtabpage.activity-stream.asrouter.providers.cfr` preference has a `bucket` attribute with a value of `cfr`, no `cohort` attribute (or at least not one that starts with `PERSONALIZATION_EXPERIMENT_1_`), no `personalized` attribute and no `personalizedModelVersion` attribute.
 
-**Treatment updates scores upon each `cfr-ml-model` Remote Settings bucket update**
+**Treatment updates scores upon each `cfr-ml-models` Remote Settings bucket update**
 
 - Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride` preference to `random_between_1_and_9999` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.scoringBehaviorOverride", "random_between_1_and_9999")`)
 - Install the `treatment` add-on as per above
@@ -145,7 +145,7 @@ await AddonStudies.add({
   - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 - Either wait 60 minutes or:
   - Visit the Remote Settings Devtools page
-  - Next to the `cfr-ml-model` entry, click `Force Sync`
+  - Next to the `cfr-ml-models` entry, click `Force Sync`
   - Wait a few seconds
 - Verify that the `browser.messaging-system.personalized-cfr.score-threshold` preference is set to integer `5000`
 - Verify that the `browser.messaging-system.personalized-cfr.scores` preference is set to `{"PERSONALIZED_CFR_MESSAGE":X}` where `X` is a value between `1` and `9999` (different from last time)
@@ -155,7 +155,7 @@ await AddonStudies.add({
   - `personalized: true`
   - `personalizedModelVersion: "X"` where X is any string (can be `"-1"` during testing/development)
 
-**Treatment force syncs `cfr-ml-model` Remote Settings bucket contents periodically using a testing override**
+**Treatment force syncs `cfr-ml-models` Remote Settings bucket contents periodically using a testing override**
 
 - Add if not exists and set the `extensions.messaging-system-personalization-experiment-1.test.periodicPollingPeriodInMinutesOverride` preference to `0.1` (`Services.prefs.setStringPref("extensions.messaging-system-personalization-experiment-1.test.periodicPollingPeriodInMinutesOverride", "0.1")`)
 - Install the `treatment` add-on as per above
@@ -163,7 +163,7 @@ await AddonStudies.add({
 - Wait about 10 seconds for the first sync to be triggered
 - Verify that new updates are triggered about every 6 seconds
 
-**Treatment force syncs `cfr-ml-model` Remote Settings bucket contents periodically**
+**Treatment force syncs `cfr-ml-models` Remote Settings bucket contents periodically**
 
 - Clear/remove the `extensions.messaging-system-personalization-experiment-1.test.periodicPollingPeriodInMinutesOverride` preference if exists (`Services.prefs.clearUserPref("extensions.messaging-system-personalization-experiment-1.test.periodicPollingPeriodInMinutesOverride")`)
 - Install the `treatment` add-on as per above
